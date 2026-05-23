@@ -1,0 +1,289 @@
+
+  
+
+  
+ 
+  
+  
+  
+ 
+  
+ 
+  .file-input-container {
+    flex: 1;
+    /* Allow the file input to take available space */
+  }
+  
+  .file-input-container mat-label {
+    display: block;
+    /* Make label take full width */
+    margin-bottom: 8px;
+    /* Space below the label */
+    font-weight: bold;
+    /* Make the label bold */
+  }
+  
+  .file-input-container input[type="file"] {
+    width: 100%;
+    /* Make the file input full width */
+    padding: 8px;
+    /* Padding for a better click area */
+    border: 1px solid #ccc;
+    /* Border for file input */
+    border-radius: 4px;
+    /* Rounded corners */
+    transition: border-color 0.3s;
+    /* Smooth transition for focus */
+  }
+  
+  .file-input-container input[type="file"]:hover {
+    border-color: #007bff;
+    /* Change border color on hover */
+  }
+  
+  .file-input-container input[type="file"]:focus {
+    outline: none;
+    /* Remove default outline */
+    border-color: #0056b3;
+    /* Change border color on focus */
+  }
+  
+  button {
+    border-radius: 5px;
+  }
+  .btn-add {
+    font-size: 15px;
+  
+  }
+  /* From Uiverse.io by SpatexDEV */
+  .fileBtn {
+    border: none;
+    width: 100%;
+    display: flex;
+    padding: 0.75rem 0.75rem;
+    background-color: var(--btnFile);
+    color: var(--bg);
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    text-transform: uppercase;
+    vertical-align: middle;
+    align-items: center;
+    border-radius: 0.5rem;
+    user-select: none;
+    gap: 0.50rem;
+    transition: all 0.6s ease;
+  }
+  
+  .fileBtn:focus,
+  .fileBtn:active {
+    opacity: 0.85;
+    box-shadow: none;
+  }
+  
+  .fileBtn svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  
+  [type="file"] {
+    display: none;
+  }
+  
+
+
+
+
+  /* .form-container {
+    position: relative; 
+}
+
+.view-all-btn {
+    position: absolute; 
+    top: 20px;
+    right: 20px;
+   
+    cursor: pointer;
+    border-radius: 5px; 
+    font-size: 16px; 
+    width: 15rem;
+} */
+.btn {
+  padding: 0px 5px 0px 5px !important;
+  font-size: 1rem;
+}
+
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Form Container */
+.form-container {
+  width: 100%;
+  max-width: 800px;
+  /* margin: 20px auto; */
+  padding: 20px;
+  /* background-color: #f9f9f9;
+  border: 1px solid #ddd; */
+  border-radius: 8px;
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+  /* height: 600px;
+        overflow: scroll; */
+}
+.form-container button {
+  width:100% !important;
+  margin: 0px !important;
+}
+
+.form-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 5px 20px 0px 0px;
+}
+
+.form-header .fa-close {
+  font-size: 20px;
+  cursor: pointer;
+  margin: 0px 0px 15px 0px;
+}
+
+.form-header .fa-close:hover {
+  color: #e74c3c;
+}
+
+/* Form */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.form-field-row{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.input-group {
+  flex: 1;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #555;
+}
+
+.input {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+}
+
+textarea.input {
+  resize: vertical;
+}
+
+.error {
+  font-size: 12px;
+  color: #e74c3c;
+}
+
+/* Button Styling */
+.submit-button,
+.btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+.btn {
+  background-color: #28a745;
+  color: white;
+  margin-left: 5px;
+}
+
+.btn:hover {
+  background-color: #218838;
+}
+
+.description-container{
+  width: 100%;
+
+}
+
+.description-container label {
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.description-container textarea {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical; /* Allows vertical resizing only */
+  font-family: Arial, sans-serif;
+}
+
+.description-container textarea:focus {
+  outline: none;
+  border-color: #007BFF; /* Highlight on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .input-row {
+      flex-direction: column;
+  }
+
+  .input-group {
+      min-width: 100%;
+  }
+
+  .submit-button {
+      width: 100%;
+  }
+}

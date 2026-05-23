@@ -1,0 +1,86 @@
+<section class="OuterDiv">
+  <!-- <div>{{ trips | json }}</div> -->
+  <div class="Heading-content">
+
+
+    <div>
+      <h1 class="vehicle_heading">All Trips</h1>
+      <p class="para">View all of Trip List</p>
+    </div>
+
+    <div class="actions"> <!-- Bind formGroup -->
+      
+      <input type="date" class="date-picker" [(ngModel)]="selectedDate" (change)="filterByDate()" />
+      <input type="text" class="search-input" placeholder="Search tripName & vehicleNo " [(ngModel)]="searchTerm"
+        (input)="searchTrip()" />
+      <button class="Btn" (click)="allTrip()">All Trip
+      </button>
+      <button class="Btn" (click)="createTrip()" *ngIf="currentUser?.roles!=='Driver'">Create trip</button>
+      <button
+        class="Btn"
+        type="submit"
+        (click)="exportToExcel()"
+      >
+        Excel Export
+      </button>
+    </div>
+  </div>
+
+  <div class="tableBox">
+    <table class="my_table">
+      <thead>
+        <tr>
+          <th>Sr. No.</th>
+          <th>Driver Name</th>
+          <th>Branch</th>
+          <th>Route</th>
+          <th>Vehicle</th>
+          <th>Date</th>
+          <th>Total Distance</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let trip of trips | paginate: { itemsPerPage: 6, currentPage: page }; let i = index">
+          <td>{{ (page - 1) * 6 + i + 1 }}</td>
+          <td>{{ trip.user?.firstName }} {{trip.user?.lastName}}</td>
+          <td>{{ trip.branch?.branchName }}</td>
+          <td>{{ trip.route?.route }}</td>
+          <td>{{ trip.vehicle?.vehicleReg }}</td>
+          <td>{{ trip?.startDate | date }}</td>
+          <td>{{ trip?.totalDistance }}</td>
+          <td class="status-cell">
+            <span [ngClass]="{
+              'status': true,
+              'completed': trip.tripStatus === 'COMPLETED',
+              'process': trip.tripStatus === 'IN_PROGRESS',
+              'pending': trip.tripStatus === 'CANCELLED',
+              'create': trip.tripStatus === 'CREATED'
+            }">
+              {{ trip.tripStatus }}
+            </span>
+          </td>
+          <td>
+            <button class="update-btn" *ngIf="trip.tripStatus === 'CREATED'" (click)="updateTrip(trip.tripId)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="view-btn" (click)="viewmore(trip.tripId)">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button class="delete-btn" *ngIf="trip.tripStatus === 'CREATED'" (click)="deleteTrip(trip.tripId)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+
+      </tbody>
+
+
+    </table>
+
+  </div>
+  <!-- Pagination controls -->
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
+
+</section>

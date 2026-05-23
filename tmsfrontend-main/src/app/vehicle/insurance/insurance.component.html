@@ -1,0 +1,62 @@
+<section class="OuterDiv">
+  <div class="Heading-content">
+    <div>
+      <h1 class="vehicle_heading">Insurance company</h1>
+      <p class="para">View all of your Client Insurance List</p>
+    </div>
+    <div class="actions">
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Search By Names"
+        [(ngModel)]="filterText"
+        (keyup)="onFilterChange()"
+      />
+      <button class="Btn" (click)="newinsurance()"> +Add New Insurance</button>
+    </div>
+  </div>
+
+  <div class="tableBox">
+    <table class="my_table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Company Name</th>
+          <th>Company Number</th>
+          <th>Contact Person Name</th>
+          <th>Person number</th>
+          <th>status</th>
+          <th>Action</th> <!-- Added Action Column -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="table-data" *ngFor="let item of filteredTableData | paginate : { itemsPerPage: 10, currentPage: page }">
+          <td>{{ item?.id }}</td>          
+          <td>{{ item?.companyName }}</td>
+          <td>{{ item?.contactNumber }}</td>
+          <td>{{ item?.contactPersonName }}</td>
+          <td>{{ item?.contactPersonNumber }}</td>
+          <td></td><!-- Assuming 'date' is part of your user object -->
+          <td>
+            <button class="update-btn" (click)="updateInsurance(item.id)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+            <button class="delete-btn" (click)="deleteInsurance(item.id)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+          </td>
+        </tr>
+      </tbody>
+      <!-- Pagination controls -->
+      <!-- <pagination-controls (pageChange)="page = $event"></pagination-controls> -->
+    </table>
+  </div>
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
+
+</section>
+
+
+
+
+
+
+
+
+<!-- -------------------------------------- -->
+

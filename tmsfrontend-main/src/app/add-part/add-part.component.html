@@ -1,0 +1,65 @@
+<section class="OuterDiv">
+    <div class="Heading-content">
+        <div>
+            <h1 class="vehicle_heading">Vehicle Part</h1>
+            <p class="para">View all of part List</p>
+        </div>
+        <div class="actions">
+            <input type="text" class="search-input" placeholder="Search By partName" [(ngModel)]="searchTerm"
+                (keyup)="search()" />
+            <button class="Btn" (click)="addPart()">
+                Create Part
+            </button>
+            <!-- (click)="addServicing()" -->
+        </div>
+    </div>
+
+    <div class="tableBox">
+        <table class="my_table">
+            <thead>
+                <tr>
+                    <th>sr No</th> <!-- Added Action Column -->
+                    <th>Part Name</th>
+                    <th>Company Name</th>
+                    <th>Description</th>
+                    <th>Action</th> <!-- Added Action Column -->
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container>
+                    <tr *ngFor="let item of allparts | paginate:{ itemsPerPage:itemsPerPage, currentPage:page}"
+                        class="trclass">
+                        <td>
+                            {{item?.id}}
+                        </td>
+
+                        <!-- Display the most recent servicing data -->
+                        <td>{{item?.partName}}</td>
+                        <td>{{item?.brandName}}</td>
+                        <td>{{item?.remark}}</td>
+
+
+                        <!-- Action Buttons -->
+                        <td>
+                            <button class="update-btn" (click)="addPart(item)">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </button>
+                            <button class="delete-btn" (click)="deletePart(item?.id)">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </ng-container>
+
+
+
+
+            </tbody>
+            <!-- Pagination controls -->
+
+        </table>
+
+    </div>
+    <!-- <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls> -->
+    <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+</section>

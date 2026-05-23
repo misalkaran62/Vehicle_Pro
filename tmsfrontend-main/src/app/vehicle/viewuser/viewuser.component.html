@@ -1,0 +1,78 @@
+<section class="OuterDiv">
+  <div class="Heading-content">
+    <div>
+      <h1 class="vehicle_heading">User</h1>
+      <p class="para">View all of User List</p>
+    </div>
+    <div class="actions">
+      <input type="date" class="date-picker" [(ngModel)]="selectedDate" (change)="filterByDate()" />
+
+      <input type="text" class="search-input" placeholder="Search username & branchname" [(ngModel)]="searchTerm"
+        (keyup)="searchUser()" />
+      <button class="Btn" (click)="allUser()">All user</button>
+      <button class="Btn" (click)="openDialog()">Create user</button>
+    </div>
+  </div>
+
+  <div class="tableBox">
+    <table class="my_table">
+      <thead>
+        <tr>
+          <th>Sr. No.</th>
+          <th>User</th>
+          <th>Mobile Number</th>
+          <th>Email Address</th>
+          <th>Branch</th>
+          <th>Status</th>
+          <th>Role</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="table-data"
+          *ngFor="let user of users | paginate: { itemsPerPage: 6, currentPage: page };let i =index">
+          <td>{{(page-1)*6+i+1}}</td>
+          <td>{{ user.firstName }} {{ user.lastName }}</td>
+          <td>{{ user.mobileNo }}</td>
+          <td>{{ user.email }}</td>
+
+          <td>
+            <ng-container *ngIf="user?.roles?.includes('RegionalManager'); else defaultBranch">
+              <div *ngIf="!user.showBranches; else branchList">
+                <span (click)="toggleBranches(user)" class="view-branches">
+                  View Branches
+                </span>
+              </div>
+              <ng-template #branchList>
+                <ul class="branch-list">
+                  <li *ngFor="let branch of user?.branches">
+                    {{ branch.branchName }}
+                  </li>
+                </ul>
+              </ng-template>
+            </ng-container>
+            <ng-template #defaultBranch>
+              {{ user.branches[0]?.branchName || 'No branch' }}
+            </ng-template>
+          </td>
+
+          <td> <label class="switch">
+              <input type="checkbox" [checked]="user.status" (change)="toggleStatus(user)" />
+              <span class="slider"></span>
+            </label></td>
+          <td>{{ user?.roles }}</td>
+          <td>
+            <button class="update-btn" (click)="updateUserDialog(user.id)">
+              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            </button>
+            <button class="delete-btn" (click)="deleteUser(user.id)" *ngIf="user.roles != 'SUPERADMIN'">
+              <i class="fa fa-trash-o" aria-hidden="true"></i>
+            </button>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
+</section>

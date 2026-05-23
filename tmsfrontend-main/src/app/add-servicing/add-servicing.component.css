@@ -1,0 +1,498 @@
+/* CSS for form layout */
+.form-field-row {
+  display: flex;
+  gap: 16px;
+  /* Space between fields */
+  flex-wrap: wrap;
+}
+.content{
+ margin-top: 10px;
+}
+.inner1{
+  display: flex;
+ flex-direction: column;
+ gap: 10px;
+  padding: 10px 0px;
+}
+.olddiv{
+  box-shadow: 1px 1px 2px gray;
+}
+
+
+.approval {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.onservicing {
+  display: flex;
+  flex-direction: column;
+  padding: 5%;
+}
+
+.description-container {
+  margin: 16px 0;
+}
+
+.description-field {
+  width: 100%;
+  /* Adjust the width as needed */
+}
+
+button {
+  margin: 0px 10px;
+}
+
+.sText {
+  font-size: 20px;
+  font-weight: 500;
+  padding-left: 10px;
+}
+
+.onservicing>.summary-content>h3 {
+  font-size: 30px;
+  padding-bottom: 20px;
+  font-weight: 500;
+}
+
+.onservicing>.summary-content>p {
+  font-size: 18px;
+  padding: 10px 0px;
+}
+
+
+
+.mat-form-field {
+  width: 100%;
+  /* Full width for smaller screens */
+  flex: 1 1 calc(33.33% - 16px);
+  /* Three fields per row */
+}
+
+@media (max-width: 768px) {
+  .mat-form-field {
+    flex: 1 1 100%;
+    /* Stack fields on smaller screens */
+  }
+}
+
+mat-form-field {
+  width: 350px;
+  margin: 0px 14px;
+}
+
+.mat-form-field .mat-label {
+  font-weight: 500;
+  color: #3f51b5;
+  /* Custom label color */
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-thickness {
+  border-width: 2px;
+}
+
+button.mat-raised-button {
+  background-color: #3f51b5;
+  color: #fff;
+  margin-top: 16px;
+}
+
+button.mat-raised-button:hover {
+  background-color: #2c3b94;
+}
+
+.form-field-row {
+  display: flex;
+  /* align-items: center; */
+  /* Vertically align items */
+
+  margin-bottom: 16px;
+  /* Spacing between rows */
+}
+
+.waiting{
+  font-size: 35px;
+  font-weight: 400;
+  color: red;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  /* Vertically center the checkbox and label */
+  margin-right: 20px;
+  /* Space between checkbox and file input */
+}
+
+.checkbox-container mat-label {
+  margin-right: 8px;
+  /* Space between the label and checkbox */
+}
+
+.file-input-container {
+  flex: 1;
+  /* Allow the file input to take available space */
+}
+
+.file-input-container mat-label {
+  display: block;
+  /* Make label take full width */
+  margin-bottom: 8px;
+  /* Space below the label */
+  font-weight: bold;
+  /* Make the label bold */
+}
+
+.file-input-container input[type="file"] {
+  width: 100%;
+  /* Make the file input full width */
+  padding: 8px;
+  /* Padding for a better click area */
+  border: 1px solid #ccc;
+  /* Border for file input */
+  border-radius: 4px;
+  /* Rounded corners */
+  transition: border-color 0.3s;
+  /* Smooth transition for focus */
+}
+
+.file-input-container input[type="file"]:hover {
+  border-color: #007bff;
+  /* Change border color on hover */
+}
+
+.file-input-container input[type="file"]:focus {
+  outline: none;
+  /* Remove default outline */
+  border-color: #0056b3;
+  /* Change border color on focus */
+}
+
+button {
+  border-radius: 5px;
+}
+
+.btn-add {
+  font-size: 15px;
+
+}
+
+/* From Uiverse.io by SpatexDEV */
+.fileBtn {
+  border: none;
+  display: flex;
+  padding: 0.75rem 0.75rem;
+  background-color: var(--btnFile);
+  color: var(--bg);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  vertical-align: middle;
+  align-items: center;
+  border-radius: 0.5rem;
+  user-select: none;
+  gap: 0.50rem;
+  transition: all 0.6s ease;
+}
+
+.fileBtn:focus,
+.fileBtn:active {
+  opacity: 0.85;
+  box-shadow: none;
+}
+
+.fileBtn svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+[type="file"] {
+  display: none;
+}
+
+.approval-status {
+  background-color: #ff9800;
+  /* Orange background color to signify attention */
+  color: white;
+  /* White text color for contrast */
+  padding: 15px;
+  /* Add some padding around the text */
+  border-radius: 8px;
+  /* Rounded corners for a soft look */
+  font-size: 16px;
+  /* Adjust the font size for readability */
+  font-weight: bold;
+  /* Make the text bold */
+  margin-top: 20px;
+  /* Add space above the status box */
+  text-align: center;
+  /* Center-align the text */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* Light shadow for subtle depth */
+}
+
+.approval-status p {
+  margin: 0;
+  /* Remove any extra margins from the paragraph */
+}
+
+.approval-status strong {
+  color: #ffffff;
+  /* Ensure the strong text (Status) is also white */
+}
+
+.waiting_approve {
+  font-size: 32px;
+  font-weight: 400;
+}
+
+/* ------------------------------------------- */
+.setting_main {
+
+  display: flex;
+  justify-content: start;
+
+  gap: 10px;
+
+  padding: 30px;
+  padding-bottom: 10%;
+  width: 100%;
+
+}
+
+.acounttextarea {
+  /* width: 100%; */
+  outline: none;
+  border: none;
+  font-size: 15px;
+}
+
+.accountm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+
+}
+
+.account_right {
+
+  display: flex;
+  background-color: white;
+  flex-direction: column;
+  padding: 2% 4%;
+  width: 100%;
+  /* margin: 4% 0px; */
+  border-radius: 10px;
+  box-shadow: 1px 1px 3px gray;
+}
+
+.upload_profile {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+
+  width: 100%;
+
+  margin-bottom: 20px;
+
+}
+
+.upload_but_div {
+  display: flex;
+  justify-content: end;
+
+}
+
+.upload_button {
+  padding: 10px 50px;
+  border-radius: 8px;
+  width: 100%;
+  background-color: var(--dark-white);
+  border: none;
+  color: white;
+  font-size: 15px;
+}
+
+.account_field {
+  width: 100%;
+}
+
+.acount_input {
+  width: 100%;
+}
+
+.account_feild_div {
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 7%;
+  width: 100%;
+  margin: 15px 0px;
+}
+
+.acoount_img {
+  width: 270px;
+  height: 270px;
+  border-radius: 50%;
+
+}
+
+.profile_img {
+  border-radius: 50%;
+}
+
+.accLabel {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.account_left_h1>h1 {
+  font-size: 30px;
+  font-weight: 300;
+
+}
+
+.acoount_right_bottom {
+  width: 90%;
+  margin-right: 10%;
+}
+
+.accin {
+  width: 100%;
+  box-shadow: 1px 1px 2px gray;
+  padding: 13px;
+  border-radius: 10px;
+  background-color: white;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.acount_input {
+  outline: none;
+  border: none;
+}
+
+.accinlast {
+  width: 47%;
+  border: 1px solid gray;
+  padding: 13px;
+  border-radius: 10px;
+  background-color: white;
+  margin-top: 10px;
+}
+
+@media (max-width: 1300px) {
+  .account_feild_div {
+    flex-wrap: wrap;
+    width: 80%;
+    margin-left: 10%;
+  }
+
+  .accinlast {
+    width: 100%;
+  }
+  .account_field{
+    margin-top: 15px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .account_feild_div {
+    flex-wrap: wrap;
+    width: 80%;
+    margin-left: 10%;
+  }
+
+  .account_left {
+    width: 40%;
+  }
+
+  .acoount_img {
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+
+  }
+}
+
+@media (max-width: 900px) {
+  .acoount_img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+
+  }
+
+  .account_left_h1>h1 {
+    font-size: 26px;
+    font-weight: 600;
+
+  }
+}
+
+@media (max-width: 650px) {
+
+  .setting_main {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+.waiting{
+  font-size: 22px;
+}
+.account_left_h1>h1{
+  /* text-align: center; */
+  font-size: 20px !important ;
+}
+
+  .account_left {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .account_right {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .upload_profile {
+    justify-content: center;
+  }
+
+  .account_left_h1>h1 {
+    text-align: center;
+    font-size: 30px;
+  }
+
+  .acoount_right_bottom {
+    margin: 0px;
+  }
+
+}
+
+.img-box{
+  width: 20%;
+  position: relative;
+}
+
+.img-box img{
+  border-radius: 7px;
+  transition: .9s ease-in-out;
+  position: absolute;
+  /* transform: scale(3); */
+}
+
+.img-box:hover img{
+  top: -163%;
+  left: -210%;
+  transform: scale(3);
+}

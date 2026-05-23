@@ -1,0 +1,159 @@
+/* *{
+    height: 1000px;
+    width: 1000px;
+} */
+
+.employee-details-container {
+    /* max-width: 900px; */
+    height: 92vh;
+    margin: auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+strong {
+    font-size: large;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: #f9f9ff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* .kyc-img{
+    background-color: aqua;
+    font-size: larger;
+    padding: 10px;
+} */
+.section-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.mdc-list-item__primary-text {
+    color: var(--mdc-theme-text-primary-on-background, rgba(0, 0, 0, 0.87));
+    font-size: initial;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.field {
+    background: #f4f4fb;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.field label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.field div {
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+}
+
+.viewDocument {
+    display: flex;
+    /* Flexbox to align buttons in one line */
+    gap: 15px;
+    /* Space between buttons */
+    justify-content: flex-start;
+    /* Align buttons to the start */
+}
+
+.kyc-img {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: var(--blue);
+    cursor: pointer;
+    font-size: initial;
+    transition: all 0.3s ease;
+}
+
+.kyc-img:hover {
+    /* background-color: whitesmoke; */
+    border-color: #999;
+}
+
+.kyc-img:active {
+    transform: scale(0.98);
+}
+/* Tooltip container for positioning */
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Tooltip text styling */
+.tooltip {
+    visibility: hidden;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+
+    /* Positioning */
+    position: absolute;
+    bottom: 100%;
+    /* Position above the button */
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 5px;
+
+    /* Add a fade-in effect */
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+/* Tooltip arrow */
+.tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    /* Position at the bottom of the tooltip */
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
+
+/* Show tooltip on hover */
+.tooltip-container:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+.download-btn {
+    margin: 5px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}

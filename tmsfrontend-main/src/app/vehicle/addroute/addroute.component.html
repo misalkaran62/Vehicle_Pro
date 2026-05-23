@@ -1,0 +1,27 @@
+<div class="form-header">
+    <h1>{{isUpdate?'UpdateTrip':'Trip Plan'}}</h1>
+  
+   
+        <i class="fa fa-close" (click)="close('closes')"></i>
+    
+  </div>
+  <div class="form-container">
+    
+    
+      <!-- View All Trips Button -->
+      
+    
+      <form [formGroup]="tripForm" (ngSubmit)="onSubmit()">
+        <div class="input-row">
+          <div class="input-group">
+            <label for="route" class="label">Route: <button class="btn"  type="button" (click)="Route()">+</button></label>       
+         </div>   
+      </div>
+      <div class="input-row">
+        <button type="submit" class="submit-button">{{isUpdate?'Update':'Create trip'}}</button>
+    </div>
+  
+      </form>
+    </div>
+  
+    

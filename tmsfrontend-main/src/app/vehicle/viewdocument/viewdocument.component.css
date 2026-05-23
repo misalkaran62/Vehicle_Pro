@@ -1,0 +1,131 @@
+.viewdocument {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    /* Optional: Adds a border for clarity */
+}
+
+.viewdocument iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    /* Optional: Removes border around iframe */
+}
+
+.viewdocument iframe html body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    /* Ensure full height for content inside iframe */
+}
+
+.viewdocument {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    /* Optional: Adds a border for clarity */
+}
+
+.viewdocument iframe {
+    width: 100%;
+    height: 100%;
+}
+
+.viewdocument iframe body img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* Ensures the image fits inside the iframe */
+}
+
+.download-btn {
+    width: 100%;
+    height: 100%;
+}
+
+.download-btn-container {
+    position: absolute;
+    top: 0px;
+    right: 0%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.download-btn-container button {
+    background-color: darkred;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+
+    .download-btn-container {
+        position: fixed;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .download-btn-container button {
+        font-size: 10px;
+        padding: 8px 13px;
+        width: 107%;
+        max-width: 302px;
+        margin-top: 48px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* For devices with a width of 768px or less */
+    .viewdocument {
+        height: 70vh;
+        /* Reduce height for smaller screens */
+        padding: 10px;
+        /* Add some padding for spacing */
+        border: none;
+        /* Optionally remove the border on mobile */
+    }
+
+    .viewdocument iframe {
+        width: 100%;
+        height: 100%;
+    }
+
+    .viewdocument iframe body img {
+        width: 100%;
+        height: auto;
+        /* Ensure the image scales proportionally */
+        object-fit: contain;
+    }
+}
+
+@media (max-width: 480px) {
+
+    /* For very small devices, like phones */
+    .viewdocument {
+        height: 60vh;
+        /* Further reduce height for very small screens */
+    }
+
+    .viewdocument iframe {
+        width: 100%;
+        height: 100%;
+    }
+
+    .viewdocument iframe body img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+    }
+}

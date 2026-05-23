@@ -1,0 +1,102 @@
+<section class="OuterDiv">
+  <div class="Heading-content">
+    <div>
+      <h1 class="vehicle_heading">Servicing</h1>
+      <p class="para">View all of Servicing List</p>
+    </div>
+    <div class="actions">
+      <input type="date" class="date-picker" [(ngModel)]="selectedDate" (change)="filterByDate()" />
+
+      <input type="text" class="search-input" placeholder="Search By VehicleNo" [(ngModel)]="searchTerm"
+        (keyup)="search()" />
+        <button
+        class="Btn"
+        type="submit"
+        (click)="exportToExcel()"
+      >
+        Excel Export
+      </button>
+      <button class="Btn" (click)="addServicing()">
+        Create servicing
+      </button>
+    </div>
+  </div>
+
+  <div class="tableBox">
+    <table class="my_table">
+      <thead>
+        <tr>
+          <th>Vehicle No</th> <!-- Added Action Column -->
+          <th>Next Servicing</th>
+          <th>Servicing Type</th>
+          <th>Servicing Date</th>
+          <!-- <th>status</th> -->
+          <th>Status</th>
+          <th [style.display]="isPartChangeVisible ? '' : 'none'">
+            Approved
+          </th>
+          <th>Action</th> <!-- Added Action Column -->
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container
+        *ngFor="let item of servicingAllData | paginate: { itemsPerPage: itemsPerPage, currentPage: page }"
+        class="trclass">
+        
+        <!-- Get filtered and sorted servicing entry -->
+        <tr *ngIf="getLatestServicing(item) as latestServicing">
+          <!-- Vehicle ID -->
+          <td [attr.rowspan]="1">
+            {{ item?.vehicleReg }}
+          </td>
+      
+          <!-- Display the most recent servicing data -->
+          <td>{{ latestServicing?.lastServicing | date }}</td>
+          <td>{{ latestServicing?.servicingType }}</td>
+          <td>{{ latestServicing?.servicingDate | date }}</td>
+      
+          <td class="status-cell">
+            <span [ngClass]="{
+                'completed': latestServicing?.completionStatus === 'SERVICING_COMPLETED',
+                'process': latestServicing?.completionStatus === 'ON_SERVICING',
+                'create': latestServicing?.completionStatus === 'SERVICING_RAISED'
+              }">
+              {{ latestServicing?.completionStatus || 'SERVICING_RAISED' }}
+            </span>
+          </td>
+      
+          <td [style.display]="isPartChangeVisible ? '' : 'none'">
+            <ng-container *ngIf="latestServicing?.servicingType === 'PART_CHANGE' || latestServicing?.servicingType === 'ACCIDENT'; else emptyCell">
+              <label class="switch">
+                <input type="checkbox" [(ngModel)]="latestServicing.approved" (ngModelChange)="onApprovedChange(latestServicing)"
+                  [disabled]="latestServicing?.completionStatus !== 'ON_SERVICING'" />
+                <span class="slider round"></span>
+              </label>
+            </ng-container>
+
+
+            
+            <ng-template #emptyCell></ng-template>
+          </td>
+      
+          <!-- Action Buttons -->
+          <td>
+            <button class="view-btn" (click)="oneService(item?.vehicleId)">
+              <i class="fas fa-eye"></i>
+            </button>
+          </td>
+        </tr>
+      </ng-container>
+      
+
+
+
+      </tbody>
+      <!-- Pagination controls -->
+
+    </table>
+
+  </div>
+  <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+
+</section>

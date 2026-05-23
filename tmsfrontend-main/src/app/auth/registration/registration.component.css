@@ -1,0 +1,153 @@
+.add-branch-button {
+    background-color:rgb(10, 24, 67); /* Bootstrap primary color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-top: 10px; /* Space above the button */
+    position: absolute; /* Use absolute positioning */
+    top:5rem;          /* Adjusts the vertical position */
+    right: 13rem;   
+
+}
+.eye{
+    display: flex;
+    
+}
+.fa-eye{
+    margin-left: -32px;
+    padding: 9px 0px 0px 3px;
+}
+.error{
+    color:red;
+}
+.add-branch-button:hover {
+    background-color: black; /* Darker shade on hover */
+}
+@media(max-width:750px) {
+    .input-group {
+       
+        margin-right: 0px;
+    }
+}
+
+
+
+
+/* ---------------------------------------------- */
+.selected-branches {
+    margin-top: 10px;
+  }
+  
+  .selected-branch {
+    display: inline-block;
+    background-color: #f1f1f1;
+    padding: 5px 10px;
+    margin-right: 10px;
+    border-radius: 3px;
+  }
+  
+  .selected-branch button {
+    background: none;
+    border: none;
+    color: red;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+
+  .input-group {
+    position: relative;
+  }
+  
+  .custom-multi-select {
+    width: 100%;
+    position: relative;
+  }
+  
+  .multi-select-container {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    cursor: pointer;
+    background-color: #fff;
+  }
+  
+  .selected-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  
+  .selected-branch {
+    background-color:#6b8097;
+    color: white;
+    padding: 0px 0px 0px 5px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    height: 32px;
+  }
+  
+  .selected-branch button {
+    background: none;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: -2px;
+    font-size: 11px;
+  }
+  
+  .placeholder {
+    color: #aaa;
+  }
+  
+  .dropdown-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    max-height: 150px;
+    overflow-y: auto;
+    border-radius: 4px;
+    z-index: 100;
+  }
+  
+  .dropdown-options div {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .dropdown-options div:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .dropdown-options div.selected {
+    background-color: #007bff;
+    color: #fff;
+  }
+
+  @media (max-width: 768px) {
+    .form_box{
+      /* border: 1px solid; */
+      height: 600px;
+      overflow: scroll;
+    }
+  }
+  @media (max-width: 350px) {
+   .form-container{
+    padding: 9px 10px 0px 10px;
+   }
+   .submit-button{
+    margin-bottom: 42px;
+   }
+  }
+  

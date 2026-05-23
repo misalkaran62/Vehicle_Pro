@@ -1,0 +1,61 @@
+<section class="OuterDiv">
+<div class="Heading-content">
+    <div>
+        <h1 class="vehicle_heading">Branch</h1>
+        <p class="para">View all of Branch List</p>
+    </div>
+    <div class="actions">
+        <input 
+            type="text" 
+            class="search-input" 
+            placeholder="Search by Bname,Location,Pname" 
+            [(ngModel)]="searchTerm" 
+            (input)="searchBranch()" />
+        <button class="Btn" (click)="openDialog()" *ngIf="currentUser.roles == 'SUPERADMIN'">Create branch</button>
+    </div>
+</div>
+
+
+  
+    <div class="tableBox">
+        <table class="my_table">
+            <thead>
+                <tr>
+                    <!-- <th>Vid</th> -->
+                    <th>Sr. No.</th>
+                    <th>Branch Name</th>
+                    <th>Branch Location</th>
+                    <th>Person Name</th>
+                    <th>Mobile Number</th>
+                    <th *ngIf="currentUser.roles == 'SUPERADMIN'">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-data" *ngFor="let item of data | paginate: { itemsPerPage: 6, currentPage: page }; let i = index">
+                    <!-- <td>{{item.id}}</td> -->
+                    <td>{{ (page - 1) * 6 + i + 1 }}</td>
+                    <td>{{item.branchName}}</td>
+                    <td>{{item.branchLocation}}</td>
+                   
+                    <td>{{item.branchContactPerson}}</td>
+                    <td>{{item.branchContactPersonMobile}}</td>
+                    <td *ngIf="currentUser.roles == 'SUPERADMIN'">
+                     
+                        <button class="update-btn" (click)="openUpdateDialog(item.id)">
+                            <i class="fas fa-edit"></i> 
+                        </button>
+                        <button class="delete-btn" (click)="deleteVehicle(item.id)">
+                            <i class="fas fa-trash"></i> 
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    
+        <!-- Pagination controls -->
+        
+    </div>
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+
+
+</section>

@@ -1,0 +1,64 @@
+<div class="employee-details-container">
+    <h1 class="title">Driver Details</h1>
+
+    <!-- Personal Data Card -->
+    <div class="card">
+        <div class="grid">
+            <div class="field">
+                <label>Name :</label>
+                <strong>{{ driverData.firstName }} {{ driverData.lastName }}</strong>
+            </div>
+            <div class="field">
+                <label>Email :</label>
+                <strong>{{ driverData.email }}</strong>
+            </div>
+            <div class="field">
+                <label>Mobile :</label>
+                <strong>{{ driverData.mobileNo }}</strong>
+            </div>
+            <div class="field">
+                <label>Username :</label>
+                <strong>{{ driverData.userNname }}</strong>
+            </div>
+            <div class="field">
+                <label>Branch :</label>
+                <strong>{{ driverData.branches[0].branchName }}</strong>
+            </div>
+            <div class="field">
+                <label>License Number :</label>
+                <strong>{{ driverData.drivingLicenseNumber }}</strong>
+            </div>
+            <div class="field">
+                <label>License Expiry Date :</label>
+                <strong>{{ driverData.expiryDate | date: 'yyyy-MM-dd' }}</strong>
+            </div>
+            <div class="field">
+                <label>License Type :</label>
+                <strong>{{ driverData.licenseType}}</strong>
+            </div>
+        </div>
+    </div>
+    <!-- Document Details Card -->
+    <div class="card">
+        <h2 class="section-title">View Documents</h2>
+        <div class="viewDocument">
+            <button mat-menu-item class="kyc-img" (click)="viewDocument('aadharcard', driverId)">
+                Aadhar Card
+            </button>
+
+            <button mat-menu-item class="kyc-img" (click)="viewDocument('pancard', driverId)">
+                Pan Card
+            </button>
+
+            <button mat-menu-item class="kyc-img" (click)="viewDocument('drivinglicense', driverId)">
+                Driving License
+            </button>
+            <!-- <div class="tooltip-container">
+                <button class="download-btn" (click)="downloadImage('drivinglicense', driverId)">
+                    <i class="fas fa-download"></i>
+                </button>
+                <span class="tooltip">Download License </span>
+            </div> -->
+        </div>
+    </div>
+</div>

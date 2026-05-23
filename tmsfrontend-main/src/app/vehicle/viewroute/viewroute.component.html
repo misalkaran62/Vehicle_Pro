@@ -1,0 +1,56 @@
+
+
+<section class="OuterDiv">
+    <div class="Heading-content">
+      <div>
+        <h1 class="vehicle_heading">Route</h1>
+        <p class="para">View all of route List</p>
+      </div>
+      <div class="actions">
+        <input type="date" class="date-picker" />
+        <input type="text" class="search-input" placeholder="Search routename"   [(ngModel)]="searchTerm"
+        (input)="searchRoute()" />
+       
+        <button class="Btn" (click)="addRoute()">Add new route</button>
+      </div>
+    </div>
+
+    <div class="tableBox">
+      <table class="my_table">
+        <thead>
+          <tr >
+            <th>RouteId</th>
+            <th>routeName</th>
+            <th>Description</th>      
+            <th>Date</th>     
+            <th>Create by</th>    
+            <th>Action</th> <!-- Added Action Column -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-data" *ngFor="let item of filteredallroute | paginate: { itemsPerPage: 6, currentPage: page };">
+            <td>{{item.id}}</td>
+            <td>{{item.route}}</td>
+            <td>{{item.description}}</td>
+            <td>{{item.date | date}}</td>
+            <td>{{item.createBy}}</td>
+            
+           
+                 <td>
+              <button class="update-btn" (click)="updater(item)" ><i class="fa fa-pencil-square-o"
+                  aria-hidden="true"></i></button>   
+            <button class="view-btn"><i class="fa fa-eye"></i></button>
+            </td>
+  
+          </tr>
+        </tbody>
+        <!-- Pagination controls -->
+       
+  
+      </table>
+      
+    </div>
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+    
+  
+  </section>

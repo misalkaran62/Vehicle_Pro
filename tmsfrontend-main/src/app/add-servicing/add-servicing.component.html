@@ -1,0 +1,364 @@
+<mat-horizontal-stepper [linear]="false" [formGroup]="updateForm">
+
+  <!-- Step 1: Vehicle Info -->
+  <mat-step [stepControl]="updateForm"
+    *ngIf="forupdate?.approved === false && forupdate.completionStatus ==='SERVICING_RAISED' ">
+    <ng-template matStepLabel>Servicing Details</ng-template>
+    <form [formGroup]="updateForm" class="content">
+      <div class="form-field-row ">
+        <div>
+          <!-- Edit Mode: Vehicle No as Input (readonly) -->
+          <mat-form-field appearance="outline">
+            <mat-label>Vehicle No</mat-label>
+            <input matInput formControlName="vehicleReg" readonly>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Servicing Type</mat-label>
+          <mat-select formControlName="servicingType" (selectionChange)="onServicingTypeChange()">
+            <mat-option *ngFor="let type of servicingTypes" [value]="type">
+              {{type}}
+              <!-- *ngFor="let type of vehicleTypes" -->
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Vendor</mat-label>
+          <input matInput formControlName="servicingVendor">
+        </mat-form-field>
+      </div>
+
+      <div class="form-field-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Servicing Date</mat-label>
+          <input matInput [matDatepicker]="picker2" formControlName="servicingDate">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="description-container">
+        <mat-form-field appearance="outline" class="description-field">
+          <mat-label>Description</mat-label>
+          <textarea matInput placeholder="Enter your description" rows="3"
+            formControlName="servicingDescription">{{ updateForm.get('servicingDescription')?.value }}</textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field-row" *ngIf="isFileUploadStep()">
+        <input type="file" id="changepartimg" required (change)="onFileSelected($event,'changepartimg')">
+        <label class="fileBtn" for="changepartimg">
+          <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-width="2" stroke="#fffffff"
+              d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+              stroke-linejoin="round" stroke-linecap="round"></path>
+            <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#fffffff"
+              d="M17 15V18M17 21V18M17 18H14M17 18H20"></path>
+          </svg>
+
+          <!-- Loop through the files and display them -->
+          <div>
+            <!-- Check if partChangeNames has any items -->
+            <span *ngIf="currentServiceData.partChangeNames && currentServiceData.partChangeNames.length === 0">
+              Select file
+            </span>
+
+            <!-- Display the list of files if they exist -->
+            <span *ngFor="let listFile of currentServiceData.partChangeNames">
+              {{ listFile }}
+            </span>
+          </div>
+        </label>
+
+      </div>
+
+      <div class="form-field-row">
+        <button type="button" *ngIf="!isAccident" matStepperNext mat-raised-button color="primary"
+           >Next</button>
+        <button *ngIf="isAccident" mat-raised-button color="accent" (click)="approveServicing()">
+          Sending For Approval
+        </button>
+        <button *ngIf="isAccident" mat-raised-button matStepperNext color="accent">Next</button>
+      </div>
+
+    </form>
+  </mat-step>
+  <!-- ----------------on servicing steper--------------------- -->
+  <mat-step
+    *ngIf="forupdate?.approved === false && (forupdate.completionStatus ==='SERVICING_RAISED' || forupdate.servicingType ==='REGULAR')">
+    <ng-template matStepLabel> On Servicing </ng-template>
+    <div class="form-field-row  onservicing">
+      <div class="summary-content">
+        <h3>Vehicle On Servicing</h3>
+        <p>Vehicle No: <span class="sText">{{ updateForm.get('vehicleReg')?.value }}</span></p>
+        <p style="display: flex;">Servicing Type:
+
+          <mat-select formControlName="servicingType" (selectionChange)="onServicingTypeChange()" *ngIf="!isAccident">
+            <mat-option *ngFor="let option of servicingTypess" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-select>
+
+          <mat-select formControlName="servicingType" *ngIf="isAccident">
+            <mat-option *ngFor="let option of servicingTypes" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-select>
+        </p>
+        <p>Vendor: <span class="sText">{{ updateForm.get('servicingVendor')?.value }}</span></p>
+        <p>Servicing Date: <span class="sText">{{ updateForm.get('servicingDate')?.value | date }}</span></p>
+      </div>
+
+      <div class="form-field-row">
+        <button matStepperPrevious mat-raised-button>Back</button>
+        <button type="submit" mat-raised-button color="primary" *ngIf="!isAccident"
+          (click)="sendToServicng(selectedServicingType)">Send To Servicing</button>
+        <button type="button" matStepperNext mat-raised-button color="primary" style="display: none;">Next</button>
+        <button *ngIf="isAccident || forupdate.servicingType ==='REGULAR' " mat-raised-button matStepperNext
+          color="accent" (click)="accidentServicing(selectedServicingType)">Next</button>
+      </div>
+    </div>
+
+  </mat-step>
+  <!-- -------------------- Status.....------------------------------ -->
+  <ng-container>
+    <mat-step
+      *ngIf="(forupdate.servicingType !== 'REGULAR' && forupdate.approved === false) || (forupdate.servicingType ==='ACCIDENT' && forupdate.servicingType ==='PART_CHANGE')">
+      <ng-template matStepLabel>Status</ng-template>
+      <!-- {{item.servicingType}} -->
+      <form [formGroup]="updateForm" class="content">
+        <div class="form-field-row approval">
+          <span *ngIf="status === 'approved'">Approved</span>
+          <h2 class="waiting"><span *ngIf="status !== 'approved'">Waiting for Approval</span></h2>
+
+          <div class="accountm">
+            <div class="account_right">
+
+              <div class="acoount_right_bottom">
+                <div class="account_left_h1">
+                  <h1>Servicie Details For Approval</h1>
+                </div>
+              </div>
+
+              <div class="acoount_right_bottom">
+                <div class="account_feild_div">
+                  <div class="account_field">
+                    <label for="" class="accLabel">vehicleReg</label><br>
+                    <div class="accin">{{ updateForm.get('vehicleReg')?.value }}</div>
+                  </div>
+                  <div class="account_field">
+                    <label for="" class="accLabel">servicingDate</label><br>
+                    <div class="accin">{{ updateForm.get('servicingDate')?.value }}</div>
+                  </div>
+
+                </div>
+                <div class="account_feild_div">
+
+                  <div class="account_field">
+                    <label for="" class="accLabel">Servicing Type</label><br>
+                    <div class="accin">{{ updateForm.get('servicingType')?.value }}</div>
+                  </div>
+
+                  <div class="account_field">
+                    <label for="" class="accLabel">Vendor</label><br>
+                    <div class="accin">{{ updateForm.get('servicingVendor')?.value }}</div>
+                  </div>
+                </div>
+
+                <div class="account_feild_div">
+                  <div class="account_field">
+                    <label for="" class="accLabel">servicingDescription
+                    </label><br>
+                    <div class="accin">
+                      <textarea rows="3" class="acounttextarea" readonly>
+                          {{updateForm.get('servicingDescription')?.value }}
+                        </textarea>
+                    </div>
+                  </div>
+
+                  <div class="account_field">
+                    <label for="" class="accLabel">view Documents
+                    </label> <button (click)="findImage()">currentServiceData</button><br>
+
+                    <!-- Display the processed data -->
+                    <div style="width: 100%; height:100px ; display: flex; gap: 20px; flex-wrap: wrap;">
+                      <div class="img-box" *ngFor="let imageUrl of imageURLs">
+                        <img [src]="imageUrl" alt="Servicing Image" width="100%" height="100%" />
+                      </div>
+
+                    </div>
+
+
+
+                  </div>
+                </div>
+              </div>
+              <div>
+                <button mat-raised-button (click)="backbutton()" color="accent">Back</button>
+                <!-- <button mat-button mat-raised-button color="primary" (click)="submitpage()">Submit</button> -->
+                <button type="button" matStepperNext mat-raised-button color="accent"
+                  *ngIf="forupdate.approved === true">Next</button>
+              </div>
+
+
+
+            </div>
+          </div>
+
+
+        </div>
+      </form>
+    </mat-step>
+  </ng-container>
+
+  <!-- -------------------- close servicing.------------------------------ -->
+
+  <mat-step [stepControl]="updateForm"
+    *ngIf="forupdate.servicingType ==='PART_CHANGE' || forupdate.servicingType ==='ACCIDENT'">
+    <ng-template matStepLabel>Replace Part Info</ng-template>
+    <form [formGroup]="updateForm" class="content">
+      <h1>Replace Part</h1>
+
+      <div class="inner1">
+        <p>Old Part Information</p>
+
+
+        <div class="form-field-row olddiv">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Old Part Name</mat-label>
+            <mat-select formControlName="oldpartName" (selectionChange)="onOldPartSelected($event.value)">
+              <mat-option *ngFor="let part of partmapping" [value]="part">
+                {{ part?.serialNumber }}_{{ part?.partChange.partName }}_{{ part?.partChange.brandName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="inner1">
+        <p>New Part Information</p>
+        <div class="form-field-row olddiv">
+          <!-- New Part Name (Select Dropdown) -->
+
+          <div formArrayName="newPartMappings">
+            <div *ngFor="let newPart of newPart().controls; let i = index" [formGroupName]="i">
+          
+              <div formGroupName="partChange">
+                <!-- New Part Name Dropdown -->
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>New Part Name And BrandName</mat-label>
+                  <mat-select formControlName="id" (selectionChange)="onPartChange($event, i)">
+                    <mat-option *ngFor="let part of allparts" [value]="part?.id">
+                      {{ part?.partName }} _ {{ part?.brandName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+          
+              <!-- Serial Number -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Serial No.</mat-label>
+                <input matInput formControlName="serialNumber" placeholder="Enter serial number" />
+              </mat-form-field>
+          
+              <!-- Date of Purchase -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Date of Purchase</mat-label>
+                <input matInput [matDatepicker]="purchaseDatePicker" formControlName="dateOfPurchase" />
+                <mat-datepicker-toggle matSuffix [for]="purchaseDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #purchaseDatePicker></mat-datepicker>
+              </mat-form-field>
+          
+              <!-- Date of Validity -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Date of Validity</mat-label>
+                <input matInput [matDatepicker]="validityDatePicker" formControlName="dateOfValidity" />
+                <mat-datepicker-toggle matSuffix [for]="validityDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #validityDatePicker></mat-datepicker>
+              </mat-form-field>
+          
+              <!-- Vendor Name -->
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Vendor Name</mat-label>
+                <input matInput formControlName="vendorName" placeholder="Enter vendor name" />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-field-row">
+        <button mat-raised-button matStepperPrevious color="accent">Previous</button>
+        <button matStepperNext mat-raised-button color="primary">Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+
+  <mat-step [stepControl]="updateForm"
+    *ngIf="(forupdate?.approved === true && forupdate.completionStatus ==='ON_SERVICING') || (forupdate.servicingType ==='REGULAR' && forupdate.completionStatus ==='ON_SERVICING')">
+    <ng-template matStepLabel>Payment And
+      Status</ng-template>
+    <form [formGroup]="updateForm" class="content">
+      <h1>Close Servicing</h1>
+
+      <div class="form-field-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Next Servicing</mat-label>
+          <input matInput [matDatepicker]="picker1" formControlName="lastServicing">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>km Meter</mat-label>
+          <input matInput formControlName="nextKmServicing" type="number">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>With GST</mat-label>
+          <input matInput formControlName="withGST" type="number" (input)="updateTotalAmount()" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Without GST</mat-label>
+          <input matInput formControlName="withoutGST" type="number" (input)="updateTotalAmount()" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Total Amount</mat-label>
+          <input matInput formControlName="cost" type="number" readonly>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field-row">
+        <input type="file" id="paymentReceipt" required (change)="onFileSelected($event,'paymentReceipt')">
+        <label class="fileBtn" for="paymentReceipt">
+          <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-width="2" stroke="#fffffff"
+              d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+              stroke-linejoin="round" stroke-linecap="round"></path>
+            <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#fffffff"
+              d="M17 15V18M17 21V18M17 18H14M17 18H20"></path>
+          </svg>
+          {{selectedFiles.paymentReceipt?.name ? selectedFiles.paymentReceipt?.name : 'SELECT FILE'}}
+        </label>
+      </div>
+
+      <div class="form-field-row">
+        <button mat-raised-button matStepperPrevious color="accent">Back</button>
+        <button mat-button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+      </div>
+
+    </form>
+
+  </mat-step>
+
+</mat-horizontal-stepper>

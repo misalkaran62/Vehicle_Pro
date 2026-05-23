@@ -1,0 +1,86 @@
+<div class="form-header">
+  <h1>Create Servicing</h1>
+  <i class="fa fa-close" (click)="close('closes')"></i>
+</div>
+
+<div class="form-container">
+  <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+
+    <div class="input-row" *ngIf="isCreateMode">
+      <div class="input-group">
+        <label for="vehicleReg">Vehicle No</label>
+        <div>
+          <select formControlName="vehicleReg" id="vehicleReg" class="input" (change)="giveid()" required>
+            <option *ngFor="let type of allvehicleid" [value]="type.vehicleId">
+              {{type.vehicleReg}}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Servicing Type -->
+      <div class="input-group">
+        <label for="servicingType">Servicing Type</label>
+        <select formControlName="servicingType" id="servicingType" class="input" required>
+          <option *ngFor="let type of servicingTypes" [value]="type">
+            {{ type }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Vendor -->
+      <div class="input-group">
+        <label for="servicingVendor">Vendor</label>
+        <input type="text" id="servicingVendor" formControlName="servicingVendor" class="input" />
+      </div>
+
+      <!-- Servicing Date -->
+      <div class="input-group">
+        <label for="servicingDate">Servicing Date</label>
+        <input type="date" id="servicingDate" formControlName="servicingDate" class="input" required />
+        <!-- <small>MM/DD/YYYY</small> -->
+      </div>
+      
+
+      <div class="description-container">
+        <label for="description">Description</label>
+        <textarea id="description" formControlName="servicingDescription" placeholder="Enter your description here"
+          rows="5"></textarea>
+      </div>
+
+
+
+      <!-- File Upload -->
+
+
+      <div class="form-field-row">
+        <div *ngIf="isFileUploadStep()">
+          <input type="file" id="changepartimg" required (change)="onFileSelected($event,'changepartimg')" multiple>
+          <label class="fileBtn" for="changepartimg"> select File
+            <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-width="2" stroke="#fffffff"
+                d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+                stroke-linejoin="round" stroke-linecap="round"></path>
+              <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#fffffff"
+                d="M17 15V18M17 21V18M17 18H14M17 18H20"></path>
+            </svg>
+          </label>
+        </div>
+
+        <div>
+          <button type="submit" class="submit-button">Submit</button>
+
+        </div>
+
+      </div>
+      <div class="selected-files">
+        <div *ngFor="let file of selectedFiles?.changepartimg || []; let i = index" class="file-preview">
+          <span class="file-name">{{ file.name }}</span>
+          <i class="fa fa-close close-icon" (click)="removeFile(i)"></i>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>

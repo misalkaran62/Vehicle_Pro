@@ -1,0 +1,169 @@
+<div class="form-header">
+    <h1>{{isUpdate ? 'Update User' : 'Register User'}}</h1>
+    <i class="fa fa-close" (click)="close('success')"></i>
+</div>
+
+<div class="form_box">
+<div class="form-container">
+    <form [formGroup]="formdata" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+        <div class="input-row">
+            <div class="input-group">
+                <label for="firstName" class="label">First Name</label>
+                <input type="text" formControlName="firstName" class="input" placeholder="Enter your first name"
+                    [value]="usid?.firstName" />
+                <div *ngIf="firstName?.touched && firstName?.invalid" class="error">
+                    <span *ngIf="firstName?.errors?.['required']">First name is required.</span>
+                    <span *ngIf="firstName?.errors?.['pattern']">First name should be alphabetic.</span>
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="lastName" class="label">Last Name</label>
+                <input [value]="usid?.lastName" type="text" formControlName="lastName" class="input"
+                    placeholder="Enter your last name" />
+                <div *ngIf="formdata.get('lastName')?.invalid && formdata.get('lastName')?.touched" class="error">
+                    <span *ngIf="formdata.get('lastName')?.errors?.['required']">Last name is required.</span>
+                    <span *ngIf="formdata.get('lastName')?.errors?.['pattern']">Last name should be alphabetic.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-row">
+            <div class="input-group">
+                <label for="username" class="label">Username</label>
+                <input [value]="usid?.userNname" type="text" formControlName="userNname" class="input"
+                    placeholder="Enter your username" />
+            </div>
+            <div class="input-group">
+                <label for="email" class="label">Email</label>
+                <input [value]="usid?.email" type="email" formControlName="email" class="input"
+                    placeholder="Enter your email" />
+                <div *ngIf="formdata.get('email')?.invalid && formdata.get('email')?.touched" class="error">
+                    <span *ngIf="formdata.get('email')?.errors?.['required']">Email is required.</span>
+                    <span *ngIf="formdata.get('email')?.errors?.['pattern']">Email should match the pattern</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-row">
+            <div class="input-group">
+                <label for="mobileNo" class="label">Mobile Number</label>
+                <input type="text" [value]="usid?.mobileNo" formControlName="mobileNo" class="input"
+                    placeholder="Enter mobile number" maxlength="10" />
+                <div *ngIf="formdata.get('mobileNo')?.invalid && formdata.get('mobileNo')?.touched" class="error">Mobile
+                    number is required</div>
+            </div>
+            <div class="input-group" *ngIf="!isUpdate">
+                <label for="password" class="label">Password</label>
+                <input type="password" formControlName="password" class="input" placeholder="Enter your password"
+                    [type]="ispassvisible ? 'text' : 'password'" />
+                <i class="fa fa-eye" [ngClass]="ispassvisible ? 'fa-eye' : 'fa-eye-slash'" (click)="passtoggle()"></i>
+                <div
+                *ngIf="formdata.get('password')?.invalid && (formdata.get('password')?.touched || formdata.get('password')?.dirty)">
+                <div *ngIf="formdata.get('password')?.errors?.['required']" class="error">
+                  Password is required
+                </div>
+                <div *ngIf="formdata.get('password')?.errors?.['pattern']" class="error">
+                  Password must be at least 8 characters long and contain both letters and numbers.
+                  for eg. Example!123
+                </div>
+              </div>
+            </div>
+        </div>
+
+
+
+        <div class="input-row">
+            <div class="input-group">
+                <label for="roles" class="label">Role</label>
+                <!-- <select formControlName="roles" class="input" (change)="onRoleChange()"> -->
+                <select formControlName="roles" class="input" (change)="onRoleChange()">
+
+                    <option value="" disabled selected>Select your role</option>
+                    <option value="Manager">Manager</option>
+                    <option value="RegionalManager">Regional Manager</option>
+                </select>
+                <div *ngIf="formdata.get('roles')?.invalid && formdata.get('roles')?.touched" class="error">Role is
+                    required</div>
+            </div>
+
+            <div class="input-group">
+                <label for="branch" class="label">Branch</label>
+
+                <!-- Single-select for Manager -->
+                <div *ngIf="formdata.get('roles')?.value === 'Manager'">
+                    <select formControlName="branches" class="input">
+                        <option value="" disabled>Select your branch</option>
+                        <option *ngFor="let branch of branches" [value]="branch.id"
+                            [selected]="branch.id === formdata.get('branches')?.value">
+                            {{ branch.branchName }}
+                        </option>
+                    </select>
+                </div>
+
+                <!-- Multi-select for Regional Manager (Only displayed when 'RegionalManager' is selected) -->
+                <div *ngIf="formdata.get('roles')?.value === 'RegionalManager'" class="custom-multi-select">
+                    <!-- Branch Selection Dropdown -->
+                    <!-- <select formControlName="branches" class="input" multiple (change)="onBranchSelect($event)">
+                      <option value="" disabled>Select your branches</option>
+                      
+                      <option *ngFor="let branch of branches" [value]="branch.id">
+                        {{ branch.branchName }}
+                      </option>
+                    </select> -->
+
+                    <div class="multi-select-container" (click)="toggleDropdown()">
+                        <div class="selected-items">
+                            <span *ngIf="!selectedBranches.length" class="placeholder">Select your branches</span>
+                            <div *ngFor="let selectedBranch of selectedBranches" class="selected-branch">
+                                {{ selectedBranch?.branchName }}
+                              
+                                <button type="button"  (click)="removeBranch(selectedBranch)">  <i class="fa fa-close"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown Options -->
+                    <div *ngIf="showDropdown" class="dropdown-options">
+                        <div *ngFor="let branch of branches" (click)="toggleBranchSelection(branch)"
+                            [class.selected]="isBranchSelected(branch)">
+                            {{ branch.branchName }}
+                        </div>
+                    </div>        
+                </div>
+
+
+
+                <div *ngIf="formdata.get('branch')?.invalid && formdata.get('branch')?.touched" class="error">Branch is
+                    required</div>
+                <div *ngIf="formdata.get('branches')?.invalid && formdata.get('branches')?.touched" class="error">At
+                    least one branch is required</div>
+            </div>
+        </div>
+
+        <div class="input-row driver-row" *ngIf="isDriver">
+            <h3>KYC</h3>
+            <div class="input-group">
+                <label for="aadhaar" class="label">Aadhaar Card</label>
+                <input type="file" (change)="onFileSelected($event, 'aadhaar')" class="input" />
+                <div *ngIf="aadhaarFileError" class="error">{{aadhaarFileError}}</div>
+            </div>
+
+            <div class="input-group">
+                <label for="pan" class="label">PAN Card</label>
+                <input type="file" (change)="onFileSelected($event, 'pan')" class="input" />
+                <div *ngIf="panFileError" class="error">{{panFileError}}</div>
+            </div>
+
+            <div class="input-group">
+                <label for="drivingLicense" class="label">Driving License</label>
+                <input type="file" (change)="onFileSelected($event, 'drivingLicense')" class="input" />
+                <div *ngIf="drivingLicenseFileError" class="error">{{drivingLicenseFileError}}</div>
+            </div>
+        </div>
+
+        <div class="input-row">
+            <button type="submit" class="submit-button">{{isUpdate ? 'Update' : 'Add'}}</button>
+        </div>
+    </form>
+</div>
+</div>

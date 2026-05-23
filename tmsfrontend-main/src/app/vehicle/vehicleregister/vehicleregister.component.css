@@ -1,0 +1,149 @@
+.form-field-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.content{
+  margin-top: 20px;
+}
+.mat-form-field {
+  width: 100%;
+  flex: 1 1 calc(33.33% - 16px); /* Three fields per row */
+}
+
+mat-form-field{
+  width: 335px;
+}
+
+file-input-container {
+  flex: 1;
+  /* Allow the file input to take available space */
+}
+
+.file-input-container mat-label {
+  display: block;
+  /* Make label take full width */
+  margin-bottom: 8px;
+  /* Space below the label */
+  font-weight: bold;
+  /* Make the label bold */
+}
+
+.file-input-container input[type="file"] {
+  width: 100%;
+  /* Make the file input full width */
+  padding: 8px;
+  /* Padding for a better click area */
+  border: 1px solid #ccc;
+  /* Border for file input */
+  border-radius: 4px;
+  /* Rounded corners */
+  transition: border-color 0.3s;
+  /* Smooth transition for focus */
+}
+
+.file-input-container input[type="file"]:hover {
+  border-color: #007bff;
+  /* Change border color on hover */
+}
+
+.file-input-container input[type="file"]:focus {
+  outline: none;
+  /* Remove default outline */
+  border-color: #0056b3;
+  /* Change border color on focus */
+}
+
+button {
+  border-radius: 5px;
+}
+.btn-add {
+  font-size: 15px;
+
+}
+/* From Uiverse.io by SpatexDEV */
+.fileBtn {
+  margin-bottom: 10px;
+  border: none;
+  display: flex;
+  padding: 0.75rem 0.75rem;
+  background-color: var(--btnFile);
+  color: var(--bg);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  vertical-align: middle;
+  align-items: center;
+  border-radius: 0.5rem;
+  user-select: none;
+  gap: 0.50rem;
+  transition: all 0.6s ease;
+}
+.mat-form-field {
+  display: block;
+}
+.fileBtn:focus,
+.fileBtn:active {
+  opacity: 0.85;
+  box-shadow: none;
+}
+
+.fileBtn svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+[type="file"] {
+  display: none;
+}  
+
+@media (max-width: 768px) {
+  .mat-form-field {
+    flex: 1 1 100%; /* Stack fields on smaller screens */
+  }
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-thickness {
+  border-width: 2px;
+}
+
+.mat-datepicker-toggle {
+  margin-left: -32px; /* Adjust spacing to align toggle button with input */
+}
+
+.mat-form-field .mat-form-field-infix {
+  padding: 0 16px; /* Add padding for better date picker display */
+}
+
+.mat-form-field .mat-hint {
+  margin-top: 8px; /* Space the hint text below the input */
+}
+
+button.mat-button {
+  background-color: #3f51b5;
+  color: #fff;
+  margin-top: 16px;
+  border-radius: 5px;
+}
+
+button.mat-button:hover {
+  background-color: #2c3b94;
+}
+.add-btn{
+  height: 44px !important;
+  width: 44px !important;
+  line-height: unset !important;
+  font-size: 31px !important;
+  background-color:rgb(17, 126, 17);
+}
+
+.remove-btn{
+  height: 44px !important;
+  width: 44px !important;
+  line-height: unset !important;
+  font-size: 31px !important;
+  background-color:var(--header-color);
+}

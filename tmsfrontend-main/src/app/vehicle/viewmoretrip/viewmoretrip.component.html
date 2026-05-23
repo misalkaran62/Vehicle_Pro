@@ -1,0 +1,287 @@
+<div class="OuterDiv">
+
+  <div class="Heading-content">
+    <div>
+      <h1 class="vehicle_heading">View Trip</h1>
+
+    </div>
+  </div>
+
+  <ul class="box-info">
+    <li>
+      <i class='bx bx-git-branch'></i>
+      <span class="text" id="txx">
+        <h3>Branch</h3>
+        <p>{{ trip?.branch.branchName }}</p>
+        <p>{{ trip?.branch.branchContactPersonMobile}}</p>
+      </span>
+
+    </li>
+    <li>
+      <i class='bx bx-user-circle'></i>
+      <span class="text" id="txx">
+        <h3>Driver</h3>
+        <p>{{ trip?.user.firstName }}
+          {{ trip?.user.lastName }}</p>
+        <p>{{ trip?.user.mobileNo }}
+        </p>
+      </span>
+    </li>
+    <li>
+
+      <i class='bx bxs-truck'></i>
+      <span class="text" id="txx">
+        <h3>Vehicle</h3>
+        <p>{{ trip?.vehicle.vehicleReg }}</p>
+        <p>{{ trip?.route.route }}</p>
+      </span>
+    </li>
+
+  </ul>
+
+  <!--------------------------------- step 1 ----------------------------------------------->
+  <mat-horizontal-stepper [linear]="false" *ngIf="trip" [selectedIndex]="getCurrentStep()">
+    <!-- Step 1: Trip Start -->
+    <mat-step *ngIf="trip?.tripStatus === 'CREATED'" [completed]="isStep1Completed()"
+      [editable]="trip?.tripStatus === 'CREATED'" [optional]="true"
+      [ngClass]="{ 'created-step': trip?.tripStatus === 'CREATED' }">
+      <ng-template matStepLabel>
+        <span class="step-label" style="color: blue">{{ getStep1Label() }}</span>
+      </ng-template>
+      <div *ngIf="trip.tripStatus === 'CREATED'">
+        <form #startForm="ngForm" (ngSubmit)="submitStartForm(startForm)">
+          <p><strong>Start Km:</strong></p>
+          <mat-form-field>
+            <input type="number" matInput placeholder="Enter Start Km" [(ngModel)]="trip.startKm" name="startKm"
+              required #startKm="ngModel" />
+            <mat-error *ngIf="startKm.invalid && startKm.touched">
+              Start Km is required
+            </mat-error>
+          </mat-form-field>
+          <p><strong>Start Km Photo:</strong></p>
+          <label class="fileBtn" for="fileChoose">
+            <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-width="2" stroke="#fffffff"
+                d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+                stroke-linejoin="round" stroke-linecap="round"></path>
+              <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#fffffff"
+                d="M17 15V18M17 21V18M17 18H14M17 18H20"></path>
+            </svg>
+            {{ getFormattedStartKmPhoto() }}
+          </label>
+          <input type="file" id="fileChoose" (change)="onStartKmImageChange($event)" accept="image/*" />
+          <br />
+          <button mat-button matStepperNext type="submit" [disabled]="startForm.invalid">
+            Next
+          </button>
+        </form>
+      </div>
+    </mat-step>
+    <!-- -------------------------------------Step 2: Trip End -->
+    <mat-step *ngIf="isStep2Visible()" [completed]="isStep2Completed()" [editable]="trip.tripStatus === 'IN_PROGRESS'"
+      [optional]="true">
+      <ng-template matStepLabel>
+
+
+        <span class="step-label" style="color: orange">
+          {{ getStep2Label() }}</span>
+      </ng-template>
+      <div *ngIf="trip.tripStatus === 'IN_PROGRESS'">
+        <form #endForm="ngForm" (ngSubmit)="submitEndForm(endForm)">
+          <div class="editViewMoreTrip">
+            <!-- Start Km Start Here -->
+            <div class="startBox">
+              <p><strong>Start Km:</strong></p>
+              <mat-form-field>
+                <input #startKmInput type="number" matInput placeholder="Enter Start Km" [(ngModel)]="trip.startKm"
+                  name="startKm" required #startKm="ngModel" [readonly]="!isDisable" />
+                <mat-error *ngIf="startKm.invalid && startKm.touched">
+                  Start Km is required
+                </mat-error>
+              </mat-form-field>
+              <p><strong>Start Km Photo:</strong></p>
+              <div style="display: flex;">
+                <label class="fileBtn" for="fileChooseForUpdate">
+                  <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-width="2" stroke="#fffffff"
+                      d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+                      stroke-linejoin="round" stroke-linecap="round"></path>
+                    <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#fffffff"
+                      d="M17 15V18M17 21V18M17 18H14M17 18H20"></path>
+                  </svg>
+
+
+
+                  <span>{{trip.startKmPhotoName? trip.startKmPhotoName:getFormattedStartKmPhoto() }}</span>
+                </label>
+                <input type="file" id="fileChooseForUpdate" (change)="onStartKmImageChange($event)" accept="image/*" />
+                <button type="button" class="update-btn" (click)="onEditStartKm()">
+                  <i class="fas fa-edit"></i>
+                </button>
+
+              </div>
+              <br>
+              <a *ngIf="trip.startLocation && trip.startLocation != undefined"
+                [href]="'https://www.google.com/maps?q=' + trip.startLocation" target="_blank">
+                <i class='bx bx-map-pin'></i>
+              </a>
+              <br>
+            </div>
+            <!-- Start Km end Here -->
+
+            <!-- End Km Start Here -->
+            <div class="endBox">
+              <p><strong>End Km:</strong></p>
+              <mat-form-field>
+                <mat-label>Enter End Km</mat-label>
+                <input type="number" matInput placeholder="Enter End Km" [(ngModel)]="trip.endKm" name="endKm" min="0"
+                  max="10000" #endKm="ngModel" />
+              </mat-form-field>
+              <p><strong>End Km Photo:</strong></p>
+              <div class="photo">
+                <label class="fileBtn" for="fileChooseEnd">
+                  <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-width="2" stroke="#ffffff"
+                      d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+                      stroke-linejoin="round" stroke-linecap="round"></path>
+                    <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#ffffff"
+                      d="M17 15V18M17 21V18M17 18H14M17 18H20"></path>
+                  </svg>
+                  <span>{{ getFormattedEndKmPhoto() }}</span>
+                </label>
+              </div>
+              <input type="file" id="fileChooseEnd" (change)="onEndKmImageChange($event)" hidden /><br>
+              <input type="file" id="fileChoose" (change)="onEndKmImageChange($event)" accept="image/*" />
+
+              <p *ngIf="trip.startKm && trip.endKm">
+                <strong>Total Distance:</strong> {{ calculateTotalKm() }}
+              </p>
+
+            </div>
+            <!-- End Km end Here -->
+          </div>
+          <div class="tripCancelBtn">
+            <button class="canbtn" type="button" (click)="openModal()">Cancel Trip</button>
+            <button class="nextbtn" mat-button matStepperNext type="submit">
+              Next
+            </button>
+          </div>
+          <div class="showimg">
+            <form action="">
+              <div class="modal" *ngIf="showModal">
+                <div class="modal-content">
+                  <span class="close" (click)="closeModal()">&times;</span>
+                  <h1><strong>Cancelled Trip</strong></h1>
+                  <textarea placeholder="Enter cancel Trip Reason" name="cancelReason"
+                    [(ngModel)]="cancelReason"></textarea>
+                  <button class="submit-btn" (click)="cancellationReasonData()">Submit</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div *ngIf="isStep2Initialized()">
+            <p>IN_PROGRESS</p>
+          </div>
+        </form>
+      </div>
+    </mat-step>
+
+    <!-- -------------------------------------------Step 3: Trip Completed -->
+    <mat-step *ngIf="isStep3Visible()" [completed]="trip.tripStatus === 'COMPLETED'" [editable]="false"
+      [optional]="true">
+      <ng-template matStepLabel>
+        <span class="step-label" style="color: green">
+          {{ getStep3Label() }}</span>
+      </ng-template>
+
+      <div class="complet">
+        <div *ngIf="trip.tripStatus === 'COMPLETED'">
+          <p style="font-weight: bolder; color: green">
+            <mat-icon style="vertical-align: middle">check_circle</mat-icon>
+            The trip has been completed.
+          </p>
+          <p><strong>Start Km:</strong> {{ trip.startKm }}</p>
+          <p><strong>End Km:</strong> {{ trip.endKm }}</p>
+          <p><strong>Start Date:</strong> {{ trip.startDate | date }}</p>
+          <p><strong>End Date:</strong> {{ trip.endDate | date }}</p>
+          <p><strong>Total Distance:</strong> {{ calculateTotalKm() }}</p>
+          <a *ngIf="trip.startLocation && trip.endLocation "
+            [href]="generateTripLink(trip.startLocation, trip.endLocation)" target="_blank">
+            <i class='bx bx-map-pin'></i>
+          </a>
+          <a *ngIf="this.currentUser.roles[0] ==='MANAGER' || this.currentUser.roles[0]=='SUPERADMIN' "
+            class="updatebtn" (click)="updateTrips(trip.tripId)"><i class='bx bx-edit'></i></a>
+        </div>
+        <div class="showimg">
+          <button class="start" (click)="openStartkmModal()">View StartKm_IMG</button>
+
+          <!-- Modal -->
+          <div class="modal" *ngIf="showSratkmModal">
+            <div class="modal-content">
+              <div class="download-btn-container">
+                <button class="download-btn" (click)="downloadstartkmimg('startKmimg',tripId)">
+                  <i class="fas fa-download"></i>
+                </button>
+              </div>
+              <span class="close" (click)="closestartModal()">&times;</span>
+              <img *ngIf="startKmimg()" [src]="startKmimg()" alt="Start KM Image" class="image-size"
+                style="width: 100%;" />
+              <p *ngIf="!startKmimg()">No Start KM Image Available</p>
+            </div>
+          </div>
+
+
+          <div class="showimg">
+            <button class="start" (click)="openModal()">View End Km Image</button>
+
+            <!-- Modal -->
+            <div class="modal" *ngIf="showModal">
+              <div class="modal-content">
+                <div class="download-btn-container">
+                  <button class="download-btn">
+                    <i class="fas fa-download"></i>
+                  </button>
+                </div>
+                <div class="download-btn-container">
+                  <button class="download-btn" (click)="downloadendkmimg('endKmimg',tripId)">
+                    <i class="fas fa-download"></i>
+                  </button>
+                </div>
+                <span class="close" (click)="closeModal()">&times;</span>
+                <img *ngIf="endKmimg()" [src]="endKmimg()" alt="End KM Image" class="image-size" style="width: 100%;" />
+                <p *ngIf="!endKmimg()">No End KM Image Available</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="isStep3InProgress()">
+        <p>COMPLETED</p>
+      </div>
+    </mat-step>
+
+    <!-- Step 4: Trip Cancelled -->
+    <mat-step *ngIf="isStep4Visible()" style="color: red" [completed]="trip.tripStatus === 'SETTLE'" [optional]="true">
+      <ng-template matStepLabel style="color: red">
+        {{ trip.tripStatus === "CANCELLED" ? "Trip Cancelled" : "CANCELLED" }}
+      </ng-template>
+
+      <div *ngIf="trip.tripStatus === 'CANCELLED' else SETTLE">
+        <h1 style="color: red; display: flex; align-items: center;">
+          <mat-icon style="margin-right: 5px;">cancel</mat-icon>
+          <strong>The trip was cancelled.</strong>
+        </h1>
+        <h2><strong>Reason:</strong> {{ trip.cancellationReason }}</h2>
+      </div>
+
+      <ng-template #SETTLE>
+        <!-- <div *ngIf="trip.tripStatus === 'SETTLE'"> -->
+        <p>CANCELLED</p>
+        <!-- </div> -->
+      </ng-template>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

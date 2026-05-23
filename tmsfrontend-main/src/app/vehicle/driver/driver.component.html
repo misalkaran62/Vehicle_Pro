@@ -1,0 +1,239 @@
+<div class="form-header">
+  <h1>{{isUpdate?'Update Driver':'Register Driver'}}</h1>
+
+  <i class="fa fa-close" (click)="close('success')"></i>
+
+</div>
+
+<div class="form_box">
+  <div class="form-container">
+
+    <form [formGroup]="formdata" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+      <div class="input-row">
+        <div class="input-group">
+          <label for="firstName" class="label">First Name</label>
+          <input type="text" formControlName="firstName" class="input" placeholder="Enter your first name"
+            [value]="usid?.firstName" />
+          <div *ngIf="formdata.get('firstName')?.invalid && formdata.get('firstName')?.touched" class="error">
+            Name is
+            required</div>
+        </div>
+        <div class="input-group">
+          <label for="lastName" class="label">Last Name</label>
+          <input [value]="usid?.lastName" type="text" formControlName="lastName" class="input"
+            placeholder="Enter your last name" />
+
+          <div *ngIf="formdata.get('lastName')?.invalid && formdata.get('lastName')?.touched" class="error">Last Name is
+            required</div>
+        </div>
+      </div>
+
+      <div class="input-row">
+        <div class="input-group">
+          <label for="username" class="label">Username</label>
+          <input type="text" formControlName="userNname" class="input" placeholder="Enter your username" />
+          <div *ngIf="formdata.get('userNname')?.invalid && formdata.get('userNname')?.touched" class="error">Username
+            is
+            required</div>
+        </div>
+        <div class="input-group">
+          <label for="email" class="label">Email</label>
+          <input [value]="usid?.email" type="email" formControlName="email" class="input"
+            placeholder="Enter your email" />
+          <div *ngIf="formdata.get('email')?.invalid && formdata.get('email')?.touched" class="error">
+            <!-- Required error -->
+            <span *ngIf="formdata.get('email')?.errors?.['required']">
+              Email is required.
+            </span>
+
+            <!-- Pattern error -->
+            <span *ngIf="formdata.get('email')?.errors?.['pattern']">
+              Email should match the pattern
+            </span>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="input-row">
+        <div class="input-group">
+          <label for="mobileNo" class="label">Mobile Number</label>
+          <br />
+          <input type="text" [value]="usid?.mobileNo" formControlName="mobileNo" class="input"
+            placeholder="Enter mobile number" maxlength="10" />
+          <div *ngIf="formdata.get('mobileNo')?.invalid && formdata.get('mobileNo')?.touched" class="error">Mobile
+            number
+            is required</div>
+        </div>
+        <div class="input-group" *ngIf="!isUpdate">
+          <label for="password" class="label">Password</label>
+          <input type="password" formControlName="password" class="input" placeholder="Enter your password"
+            [type]="ispassvisible ? 'text' : 'password'" />
+          <i class="fa fa-eye" [ngClass]="ispassvisible ? 'fa-eye' : 'fa-eye-slash'" (click)="passtoggle()"></i>
+          <!-- Error Messages -->
+          <div
+            *ngIf="formdata.get('password')?.invalid && (formdata.get('password')?.touched || formdata.get('password')?.dirty)">
+            <div *ngIf="formdata.get('password')?.errors?.['required']" class="error">
+              Password is required
+            </div>
+            <div *ngIf="formdata.get('password')?.errors?.['pattern']" class="error">
+              Password must be at least 8 characters long and contain both letters and numbers.
+              for eg. Example!123
+            </div>
+          </div>
+
+        </div>
+
+        <div class="input-group" *ngIf="currentUser?.roles=='SUPERADMIN'||currentUser.roles=='RegionalManager'">
+          <label for="branch" class="label">Branch</label>
+          <div formGroupName="branch">
+            <select formControlName="id" class="input">
+              <option value="" disabled selected>Select your branch</option>
+              <option *ngFor="let branch of branches" [value]="branch.id">{{ branch.branchName }}</option>
+            </select>
+            <div *ngIf="formdata.get('branch.id')?.invalid && formdata.get('branch.id')?.touched" class="error">
+              Branch is required
+            </div>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="drivingLicenseNumber" class="label">License number</label>
+          <input type="text" formControlName="drivingLicenseNumber" class="input" placeholder="MH12 2023 0051 897"
+            maxlength="15" />
+          <div *ngIf="formdata.get('drivingLicenseNumber')?.touched">
+            <!-- Required Error -->
+            <div *ngIf="formdata.get('drivingLicenseNumber')?.errors?.['required']" class="error">
+              License number is required
+            </div>
+
+            <!-- Pattern Error -->
+            <div *ngIf="formdata.get('drivingLicenseNumber')?.errors?.['pattern']" class="error">
+              License number must be exactly 15 alphanumeric characters.
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+
+      <div class="input-row">
+        <div class="input-group">
+          <label for="licensetype" class="label">License Type</label>
+          <div>
+            <select formControlName="licenseType" class="input">
+              <option value="" disabled selected>Select License Type</option>
+              <option value="TRANSPORT_LICENSE">TRANSPORT_LICENSE</option>
+              <option value="NON_TRANSPORT_LICENSE">NON_TRANSPORT_LICENSE</option>
+            </select>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="expiryDate" class="label">Date of Expire License</label>
+          <input id="expiryDate" type="date" formControlName="expiryDate" class="input" />
+          <div *ngIf="formdata.get('expiryDate')?.invalid && formdata.get('expiryDate')?.touched" class="error">Expire
+            Date is required</div>
+        </div>
+      </div>
+
+      <!-- <h3>KYC</h3> -->
+
+      <div class="input-row driver-row">
+        <div class="document_container">
+          <div class="input-row">
+            <div>
+              <input type="file" id="aadharCard" (change)="onFileSelected($event,'aadhaar')" required>
+              <label class="fileBtn" for="aadharCard">
+                <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-width="2" stroke="#ffffff"
+                    d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+                    stroke-linejoin="round" stroke-linecap="round"></path>
+                  <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#ffffff"
+                    d="M17 15V18M17 21V18M17 18H14M17 18H20"></path>
+                </svg>
+                <span class="file-name">
+                  {{
+                  isUpdate && !this.selectedFiles.aadhaar?.name
+                  ? formdata.value.aadharCardName
+                  : (this.selectedFiles.aadhaar?.name || 'SELECT Aadhar')
+                  }}
+                </span>
+              </label>
+            </div>
+
+            <div>
+              <input type="file" id="panCard" (change)="onFileSelected($event,'pan')" required>
+              <label class="fileBtn" for="panCard">
+                <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-width="2" stroke="#ffffff"
+                    d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+                    stroke-linejoin="round" stroke-linecap="round"></path>
+                  <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#ffffff"
+                    d="M17 15V18M17 21V18M17 18H14M17 18H20"></path>
+                </svg>
+                <span class="file-name">
+                  {{
+                  isUpdate && !this.selectedFiles.pan?.name
+                  ? formdata.value.panCardName
+                  : (this.selectedFiles.pan?.name || 'SELECT Pancard')
+                  }}
+                </span>
+              </label>
+            </div>
+
+            <div>
+              <input type="file" id="license" (change)="onFileSelected($event,'drivingLicense')" required>
+              <label class="fileBtn" for="license">
+                <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-width="2" stroke="#ffffff"
+                    d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+                    stroke-linejoin="round" stroke-linecap="round"></path>
+                  <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#ffffff"
+                    d="M17 15V18M17 21V18M17 18H14M17 18H20"></path>
+                </svg>
+                <span class="file-name">
+                  {{
+                  isUpdate && !this.selectedFiles.drivingLicense?.name
+                  ? formdata.value.driverLicenseName
+                  : (this.selectedFiles.drivingLicense?.name || 'SELECT DrivingLicense')
+                  }}
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-row ">
+        <button type="submit" class="submit-button">{{isUpdate?'Update':'Add'}}</button>
+
+        <!-- [disabled]="formdata.invalid" -->
+
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- <div class="input-group">
+  <label for="licensetype" class="label">License Type</label>
+  <div>
+    <select formControlName="licenseType" class="input">
+      <option value="" disabled selected>Select License Type</option>
+      <option value="TRANSPORT_LICENSE">TRANSPORT_LICENSE</option>
+      <option value="NON_TRANSPORT_LICENSE">NON_TRANSPORT_LICENSE</option>
+    </select>
+  </div>
+</div>
+
+<div class="input-row">
+  <div class="input-group">
+    <label for="expiryDate" class="label">Date of Expire License</label>
+    <input id="expiryDate" type="date" formControlName="expiryDate" class="input" />
+    <div *ngIf="formdata.get('expiryDate')?.invalid && formdata.get('expiryDate')?.touched" class="error">Expire
+      Date is required</div>
+  </div>
+</div> -->

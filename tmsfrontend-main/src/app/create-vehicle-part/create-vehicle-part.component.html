@@ -1,0 +1,36 @@
+<div class="form-header">
+    
+    <h1>{{ isEdit ? 'Edit Part' : 'Create Part' }}</h1>
+    <i class="fa fa-close" (click)="close('closes')"></i>
+</div>
+
+<div class="form-container">
+    <form [formGroup]="partForm" (ngSubmit)="onSubmit()">
+
+        <div class="input-row">
+
+            <div class="input-group">
+                <label for="">Part Name</label>
+                <input type="text" formControlName="partName" class="input" />
+            </div>
+            <div class="input-group">
+                <label for="servicingVendor">Company Name</label>
+                <input type="text" formControlName="brandName" class="input" />
+            </div>
+
+            <div class="description-container">
+                <label for="description">Description</label>
+                <textarea formControlName="remark"
+                    placeholder="Enter your description here" rows="5"></textarea>
+            </div>
+
+            <div class="form-field-row">
+                <div>
+                    <button type="submit" class="submit-button">{{ isEdit ? 'Update' : 'Create' }}</button>
+                </div>
+            </div>
+
+
+        </div>
+    </form>
+</div>

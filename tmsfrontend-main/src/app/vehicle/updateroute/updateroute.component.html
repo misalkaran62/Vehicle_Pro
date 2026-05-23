@@ -1,0 +1,50 @@
+<div class="form-header">
+  <h1>Update Route</h1>
+
+ 
+      <i class="fa fa-close" (click)="close('success')"></i>
+  
+</div>
+<div class="form-container">
+  
+  <form [formGroup]="updateRouteForm"  (ngSubmit)="submitRoute()">
+      <div class="input-row">
+          <div class="input-group">
+              <label for="" class="label">Route</label>
+              <input type="text" id="route" class="input"  formControlName="route" placeholder="Enter Route" >
+          </div>
+          <div class="input-group">
+              <label for="notes" class="label">Additional Notes:</label>
+              <textarea id="notes" formControlName="description" rows="4" class="input" placeholder="Enter additional notes"></textarea>
+            </div>
+        
+          
+      </div>
+      <div class="input-row">
+          <button type="submit" class="submit-button">Submit</button>
+      </div>
+  </form>
+<!--     
+  <div class="routes-container">
+      <h2 class="routes-header">Existing Routes</h2>
+      <table class="routes-table">
+          <thead>
+              <tr>
+                  <th>ID</th>
+                  <th>Route</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let route of paginatedRoutes">
+                  <td>{{ route.id }}</td>
+                  <td>{{ route.route }}</td>
+              </tr>
+          </tbody>
+      </table>
+      <div class="pagination">
+          <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+          <span>Page {{ currentPage }} of {{ totalPages }}</span>
+          <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+      </div>
+  </div> -->
+</div>

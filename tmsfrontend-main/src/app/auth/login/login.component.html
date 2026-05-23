@@ -1,0 +1,150 @@
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <div class="nextpart">
+        <div class="logo">
+          <img src="../../assets/sm.png" alt="SM Express Logo" />
+        </div>
+        <h2>Artificial Intelligence giving you</h2>
+        <h2 class="h2">Deliver recommendations</h2>
+        <p>Welcome Back, Please login to your account</p>
+      </div>
+      <div class="loginpage">
+        <form (ngSubmit)="login_submit()" [formGroup]="logindata ">
+          <div class="input-group">
+            <b><label for="email">Email</label></b>
+            <input type="email" id="email" placeholder="robert.langster@gmail.com" formControlName="name" required />
+            <div *ngIf="this.logindata.get('name')?.invalid && this.logindata.get('name')?.touched" class="error">email
+              is
+              required</div>
+          </div>
+          <div class="input-group">
+            <b><label for="password">Password</label></b>
+            <div class="eye">
+              <input [type]="ispassvisible ?'text' : 'password'" placeholder="****" formControlName="password"
+                required />
+              <i class="fa fa-eye" [ngClass]="ispassvisible ? 'fa-eye' : 'fa-eye-slash'" (click)="passtoggle()"></i>
+            </div>
+            <p *ngIf="this.logindata.get('password')?.invalid && this.logindata.get('password')?.touched" class="error">
+              Password is required</p>
+          </div>
+
+          <div class="options">
+            <label>
+              <input type="checkbox" />
+              Remember me
+            </label>
+            <a [routerLink]="['/auth/forgot']">Forgot password?</a>
+          </div>
+          <div class="buttons">
+            <button type="submit" class="login-button">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="illustration">
+      <div class="sm">
+        <div class="logo">
+          <img src="../../assets/sm.png" alt="SM Express Logo" />
+        </div>
+        <div>
+          <h2>Artificial Intelligence giving you</h2>
+          <h2 class="h2">Deliver recommendations</h2>
+          <p>Welcome Back, Please login to your account</p>
+        </div>
+      </div>
+      <div class="imggg"><img src="../../../assets/codifyformatter (8).jpg" alt="Illustration" /></div>
+    </div>
+  </div>
+
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="vehical_main">
+    <div class="vehical_out">
+        <div class="vehical_inside">
+            <form (ngSubmit)="login_submit()" [formGroup]="logindata ">
+                <div class="register_name">
+                    <h1>Login</h1>
+                    <p class="namepara">Begin your Vehical journey by registering with us</p>
+                </div>
+                <div class="urow">
+                    <div class="register_uname">
+                        <label for="">email</label><br>
+                        <input type="text" placeholder="Enter email" formControlName="name" class="uinput"><br>
+                        <div *ngIf="this.logindata.get('name')?.invalid && this.logindata.get('name')?.touched"
+                            class="error">email is required</div>
+                    </div>
+                </div>
+                <div class="passrow">
+                    <div class="register_pass">
+                        <div class="p1">
+                            <label for="">Password</label><br>
+                            <div class="p1_pass">
+                                <input [type]="ispassvisible ?'text' : 'password'" placeholder="Enter Password"
+                                    formControlName="password" id="pp">
+                                <i class="fa fa-eye" [ngClass]="ispassvisible ? 'fa-eye' : 'fa-eye-slash'"
+                                    (click)="passtoggle()"></i>
+                            </div>
+                            <p *ngIf="this.logindata.get('password')?.invalid && this.logindata.get('password')?.touched"
+                                class="error">Password is required</p>
+                            <div class="passlower">
+                                <div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!-- 
+                <div class="rolerow">
+                    <div class="role">
+                        <label for="">Module</label><br>
+                        <input type="text" formControlName="module" class="input1">
+                        <div *ngIf="this.logindata.get('module')?.invalid && this.logindata.get('module')?.touched"
+                            class="error">Module is required</div>
+                    </div>
+                    <div class="role">
+                        <label for="">Action</label><br>
+                        <input type="text" formControlName="action" class="input2">
+                        <div *ngIf="this.logindata.get('action')?.invalid && this.logindata.get('action')?.touched"
+                            class="error">Action is required</div>
+                    </div>
+                </div> -->
+<!-- <div class="rbutton">
+                    <button class="btn" type="submit">Login</button>
+                    <p class="button_p"><a [routerLink]="['/forgot']" class="forgot">Forgot Password?</a></p> -->
+<!-- </div> -->
+<!-- </form> -->
+<!-- </div> -->
+<!-- </div> -->

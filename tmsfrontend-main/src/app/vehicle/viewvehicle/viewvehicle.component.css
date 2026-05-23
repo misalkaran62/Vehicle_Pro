@@ -1,0 +1,18 @@
+.status.available{
+  padding: 6px 16px;
+  background: green;
+  border-radius: 15px; 
+  color: white;
+}
+.status.ontrip{
+  padding: 6px 16px;
+  background: orange;
+  border-radius: 15px; 
+  color: white;
+}
+.status.servicing{
+  padding: 6px 16px;
+  background: red;
+  border-radius: 15px; 
+  color: white;
+}

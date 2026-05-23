@@ -1,0 +1,199 @@
+<body>
+
+
+    <!-- siderbar section end -->
+
+    <div class="A">
+        <!-- content section start -->
+        <section id="sidebar">
+            <div class="upper-text">
+                <div class="tms-img">
+                    <img src="../../assets/sm.png" alt="">
+                </div>
+            </div>
+            <div class="sidebox">
+                <ul class="side-menu top">
+                    <li routerLink="/dashboard/" >
+                        <div class="side1">
+                            <i class="fa fa-th-large" aria-hidden="true"></i>
+                            <span class="text">Dashboard</span>
+                        </div>
+                    </li>
+                    
+                    <li routerLink="/dashboard/viewbranch"  *ngIf="currentUser.roles=='SUPERADMIN'||currentUser.roles=='RegionalManager'" >
+                        <div class="side1">
+                            <i class="fa far fa-object-group" aria-hidden="true" ></i>
+                            <span class="text">Branch</span>
+                        </div>
+                    </li>
+                    <li routerLink="/dashboard/vehicle/viewuser"  *ngIf="currentUser.roles=='SUPERADMIN'||currentUser.roles=='RegionalManager'" >
+                        <div class="side1">
+                            <i class='fa fa-user'></i>
+                            <span class="text">User</span>
+                        </div>
+                    </li>
+                    <li routerLink="/dashboard/vehicle/viewdriver"  *ngIf="currentUser.roles!=='Driver'">
+                        <div class="side1">
+                            <i class='fa fa-address-book-o'></i>
+                            <span class="text">Driver</span>
+                        </div>
+                    </li>
+                    <!-- <li routerLink="/dashboard/vehicle/insurance"   *ngIf="currentUser.roles=='SUPERADMIN'" >
+                        <div class="side1">
+                            <i class='fa fa-address-card'></i>
+                            <span class="text">insurance</span>
+                        </div>
+                    </li> -->
+                    <li routerLink="/dashboard/vehicle/view-vehicle" *ngIf="currentUser.roles!=='Driver'" >
+                        <div class="side1">
+                            <i class='fa fa-car'></i>
+                            <span class="text">Vehicle</span>
+                        </div>
+                    </li>
+                    <li routerLink="/dashboard/vehicle/viewroute" *ngIf="currentUser.roles=='SUPERADMIN'||currentUser.roles=='RegionalManager'">
+                        <div class="side1">
+                            <i class="fa fa-road" aria-hidden="true"></i>
+                            <span class="text">Route</span>
+                        </div>
+                    </li>
+                    <li routerLink="/dashboard/vehicle/viewtrips">
+                        <div class="side1">
+                            <i class="fas fa-map-marked-alt fa-fw"></i>
+                            <span class="text">Trip</span>
+                        </div>
+                    </li>
+                    <li [routerLink]="['/dashboard/servicing']" >
+                        <div class="side1">
+                            <i class='fa fa-wrench'></i>
+                            <span class="text">Servicing</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="side1" routerLink="/dashboard/addpart">
+                            <i class='fa fa-plus-square'></i>
+                            <span class="text">Add Part</span>
+                        </div>
+                    </li>
+                   
+                    <li>
+                        <div class="side1" (click)="logout()">
+                            <i class='fa fa-sign-out'></i>
+                            <span class="text">Log out</span>
+                        </div>
+                    </li>
+                </ul>
+                <!-- <ul class="side-menu top" *ngIf=" currentUser.roles!=='Driver'" >
+                    <p class="side-para">Maintanance</p>
+                    
+                    <li routerLink="/dashboard/vehicle/notification" >
+                        <div class="side1">
+                            <i class='fa fa-bell'></i>
+                            <span class="text">Notification</span>
+                        </div>
+                    </li>
+                </ul> -->
+                <!-- <ul class="side-menu top">
+                    <p class="side-para">Support</p>
+                    <li routerLink="/dashboard/setting"  >
+                        <div class="side1" >
+                            <i class='fa fa-gear'></i>
+                            <span class="text" style="color: black;">Setting</span>
+                        </div>
+
+                      
+                    </li>
+                    <li routerLink="/dashboard/feedback" >                     
+                        <div class="side1" >
+                            <i class='fa fa-comment-alt'></i>
+                            <span class="text">FeedBack</span>
+                        </div>
+                    </li>
+                   
+
+                </ul> -->
+            </div>
+   
+
+    </section>
+</div>
+
+
+    <section id="content">
+        <!-- navbar section start -->
+
+        <nav>
+            <!-- <div class="tms-img-next">
+                <img src="../../assets/sm.png" alt="">
+            </div> -->
+            <i class='fa fa-bars'></i>
+     
+            <!-- <h1 class="nav-link">SM Logistics</h1> -->
+            <form action="">
+                <!-- <div class="form-input">
+                    <input type="search" placeholder="search....">
+                    <button type="submit" class="search-btn"><i class='fa fa-search'></i></button>
+                </div> -->
+            </form>
+            <div [routerLink]="['/dashboard/vehicle/notification']"   class="notification">
+                <i class='fa fa-bell'></i>
+                <span class="num" *ngIf="notificationCount>0">{{notificationCount}}</span>
+            </div>
+            <div class="utoggle">
+            <!-- <a href="#" class="profile"></a> -->
+            
+                <div class="profile" (click)=" usertoggle()">
+                    {{currentUser?.firstName|uppercase}}
+                </div>
+                <div class="users">
+                    <p class="Welcome">Welcome !</p>
+                    <div class="ul">
+                        <ul class="insta_p" routerLink="/dashboard/setting">
+                            <li class="fauser"><i class="fa fa-user" aria-hidden="true"></i></li>
+                            <li class="logtx">View Profile</li>
+                        </ul>
+                        <ul class="logout" routerLink="/dashboard/feedback">
+                            <li  class="fauser"><i class="
+                                fa fa-comment-alt" aria-hidden="true"></i></li>
+                            <li class="logtx">FeedBack</li>
+                        </ul>
+                        <ul class="logout" routerLink="/dashboard/changepass" >
+                            <li  class="fauser"><i class="
+                                fa fa-bell" aria-hidden="true"></i></li>
+                            <li class="logtx">Change Password</li>
+                        </ul>
+                        
+                        <ul class="logout" (click)="logout()" >
+                            <li  class="fauser"><i class="
+                                fa fa-arrow-right" aria-hidden="true"></i></li>
+                            <li class="logtx">LogOut</li>
+                        </ul>
+    
+                    </div>
+                </div>
+            </div>
+    
+        </nav>
+
+
+
+        <!-- navbar section end -->
+
+
+        <!-- main content section  start-->
+
+        <main>
+
+            <div class="main-contente-box">
+                <div class="main-inner-box">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+
+        </main>
+
+    </section>
+
+
+</body>
+
+

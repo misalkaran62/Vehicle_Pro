@@ -1,0 +1,84 @@
+<section class="form-container">
+  <h1 class="form-header mtc">Insurance Company Details</h1>
+  <div class="newinsurance_inner">
+    <form (ngSubmit)="submitCompanyDetails(insuranceData.id)" #insuranceForm="ngForm">     
+      <div class="input-row">
+        <div class="input-group">
+          <label for="companyName" class="label">Company Name</label>
+          <input
+            type="text"
+            id="companyName"
+            class="input"
+            placeholder="Enter company name"            
+            name="companyName"            
+            required
+            [(ngModel)]="insuranceData.companyName" 
+            #companyName="ngModel"           
+          /> 
+          <div class="alert" *ngIf="companyName.invalid && (companyName.dirty || companyName.touched)">
+            Company Name is required
+          </div>         
+        </div>
+
+        <div class="input-group">
+          <label for="companyContact" class="label">Company Contact Number</label>
+          <input
+            type="text"
+            id="companyContact"
+            class="input"
+            placeholder="Enter company contact"
+            [(ngModel)]="insuranceData.contactNumber"
+            name="contactNumber"
+            maxlength="10"
+            #contactNumber="ngModel" 
+            required
+          />
+          <div class="alert" *ngIf="contactNumber.invalid && (contactNumber.dirty || contactNumber.touched)">
+            Company Contact is required
+          </div> 
+        </div>
+      </div>
+
+      <div class="input-row">
+        <div class="input-group">
+          <label for="contactPersonName" class="label">Contact Person Name</label>
+          <input
+            type="text"
+            id="contactPersonName"
+            class="input"
+            placeholder="Enter contact person name"
+            [(ngModel)]="insuranceData.contactPersonName"
+            name="contactPersonName"
+            #contactPersonName="ngModel"
+            required
+            
+          />
+          <div class="alert" *ngIf="contactPersonName.invalid && (contactPersonName.dirty || contactPersonName.touched)">
+            Person Name is required
+          </div> 
+        </div>
+        <div class="input-group">
+          <label for="contactPersonNumber" class="label">Contact Person Mobile Number</label>
+          <input
+            type="text"
+            id="contactPersonNumber"
+            class="input"
+            placeholder="Enter contact person mobile number"
+            [(ngModel)]="insuranceData.contactPersonNumber"
+            name="contactPersonNumber"
+            #contactPersonNumber="ngModel"
+            required
+            maxlength="10"
+          />
+          <div class="alert" *ngIf="contactPersonNumber.invalid && (contactPersonNumber.dirty || contactPersonNumber.touched)">
+           Person Number is required
+          </div> 
+        </div>
+      </div>
+
+      <div class="input-row">
+        <button type="submit" class="submit-button">Save & Submit</button>
+      </div>
+    </form>
+  </div>
+</section>

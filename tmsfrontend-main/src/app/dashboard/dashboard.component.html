@@ -1,0 +1,149 @@
+<section id="content">
+    <main>
+   
+        <div class="head-title" *ngIf="currentUser.roles=='Manager' || currentUser.roles=='SUPERADMIN'">
+            <div class="left">
+                <h1 class="vehicle_heading"> {{currentUser.roles}} Dashboard</h1>
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li><i class='bx bx-chevron-right'></i></li>
+                    <li>
+                        <a href="#" class="active">Home</a>
+                    </li>
+                </ul>
+            </div>
+      
+        </div>
+
+        <div class="head-title" *ngIf="this.currentUser.roles=='Driver'">
+            <div class="left">
+                <h1> Driver Dashboard</h1>
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li><i class='bx bx-chevron-right'></i></li>
+                    <li>
+                        <a href="#" class="active">Home</a>
+                    </li>
+                </ul>
+            </div>
+        
+        </div>
+
+
+
+        <ul class="box-info">
+            <li (click)="showUser()">
+                <i class='bx bx-user-plus'></i>
+                <span class="text" id="txx">
+                    <h3>{{vehicles?.totalNotification}}</h3>
+                    <p>Notification</p>
+                </span>
+
+            </li>
+            <li (click)="showTrip()">
+                <i class='bx bx-trip'></i>
+                <span class="text" id="txx">
+                    <h3>{{vehicles?.totalTrip}}</h3>
+                    <p>Trip</p>
+                </span>
+            </li>
+            <li (click)="showVehicle()">
+              
+                <i class='bx bxs-truck'></i>
+                <span class="text" id="txx">
+                    <h3>{{vehicles?.totalVehicle}}</h3>
+                    <p>Vehicle</p>
+                </span>
+            </li>
+           
+        </ul>
+
+
+        <div class="table-data"  >
+            <div class="order">
+                <div class="head"> 
+                    <div class="recent">
+                        <h3>Recent Trips</h3>
+                    </div>
+                    <div class="receny-div">
+                        <div class="filterdiv"><input type="text" class="filterinput" [(ngModel)]="filterText" (keyup)="onFilterChange()"><i
+                                class='bx bx-search-alt-2'></i></div>
+                        <i class='bx bx-filter'></i>
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Driver</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>view</th>
+                            <!-- {{item[0].user.firstName}} -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of trip">
+                          
+                            <td>
+                                <p>{{item.user?.firstName}}</p>
+                            </td>
+                            <td>{{item?.startDate |date}}</td>
+                            <td><span class="status" [ngClass]="{
+                                'completed': item?.tripStatus == 'COMPLETED',
+                                'process': item?.tripStatus == 'CREATED',
+                                'pending': item?.tripStatus == 'CANCELLED',
+                                'inprogress': item?.tripStatus == 'IN_PROGRESS'
+                              }">{{item?.tripStatus}}</span></td>
+                              <td  (click)="trips(item.tripId)">
+                                <i class='bx bx-dots-vertical-rounded' style="cursor: pointer;"></i>
+                              </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="todo" *ngIf="currentUser.roles!='Driver'">
+
+                <div class="head">
+                    <div class="recent">
+                        <h3 *ngIf="currentUser.roles!='Driver'">Servicing</h3>
+                    </div>
+                    <div class="receny-div"><i class='bx bx-add-to-queue'></i>
+                        <i class='bx bx-filter'></i>
+                    </div>
+                </div>
+
+
+                <div *ngFor="let item of servicing">
+                <ul class="todo-list"  *ngIf="item?.vehicleServicings?.length != 0">
+                    <li class="completed" >
+                        <p>{{item?.vehicleReg}}</p>
+                        <span class="servingdata" *ngFor="let items of item?.vehicleServicings; let i = index">
+                            <ng-container *ngIf="i === (item?.vehicleServicings.length - 1)">
+                                <p>{{items?.servicingDate | date}}</p>
+                                <p>{{items?.completionStatus}}</p>
+                            </ng-container>
+                        </span>
+                        
+                        
+                        <i class='bx bx-dots-vertical-rounded'></i>
+                    </li>
+                </ul>
+            </div>
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- main content section  end-->
+
+
+
+
+</section>
+<!-- content section end -->

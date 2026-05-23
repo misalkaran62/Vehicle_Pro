@@ -1,0 +1,165 @@
+<div class="servicing-card-container">
+  <div *ngFor="let element of servicingData" class="servicing-card">
+    <!-- Servicing Card Header -->
+    <div class="servicing-card-header">
+      <h2>Servicing ID: {{ element.servicingId }}</h2>
+      <span class="servicing-type">{{ element.servicingType }}</span>
+    </div>
+
+    <!-- Servicing Table Inside the Card -->
+    <div class="servicing-table-container">
+      <table class="servicing-table">
+        <thead>
+          <tr>
+            <th colspan="2">Servicing Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Last Servicing</td>
+            <td>{{ element.lastServicing ? (element.lastServicing | date:'yyyy-MM-dd HH:mm') : 'N/A' }}</td>
+          </tr>
+          <tr>
+            <td>Next Km Servicing</td>
+            <td>{{ element.nextKmServicing || 'N/A' }}</td>
+          </tr>
+          <tr>
+            <td>Servicing Date</td>
+            <td>{{ element.servicingDate ? (element.servicingDate | date:'yyyy-MM-dd HH:mm') : 'N/A' }}</td>
+          </tr>
+          <tr>
+            <td>Servicing Description</td>
+            <td>{{ element.servicingDescription || 'N/A' }}</td>
+          </tr>
+          <tr>
+            <td>Vendor</td>
+            <td>{{ element.servicingVendor || 'N/A' }}</td>
+          </tr>
+          <tr>
+            <tr>
+              <td>Created At</td>
+              <td>
+                {{ element.createdAt && element.createdAt.length >= 3 
+                    ? element.createdAt[0] + '-' + element.createdAt[1] + '-' + element.createdAt[2] 
+                    : 'N/A' }}
+              </td>
+            </tr>
+          <tr>
+            <td>Cost</td>
+            <td>{{ element.cost? (element.cost | currency:'INR'):'N/A' }}</td>
+          </tr>
+          <tr>
+            <td>GST</td>
+            <td>{{ element.gst? (element.gst | currency:'INR'):'N/A' }}</td>
+          </tr>
+          <tr>
+            <td>Total Amount</td>
+            <td>{{ element.totalAmount? (element.totalAmount | currency:'INR'):'N/A'}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Part Change Files -->
+      <div class="part-change-files">
+        <strong>Part Change Files:</strong>
+        <!-- <button class="view-btn" (click)="viewPayment('partChange', element.servicingId)">
+          <i class="fas fa-eye"></i>
+        </button> -->
+
+        <button class="view-btn" (click)="findImage()">
+          <i class="fas fa-eye"></i>
+        </button>
+        <p>{{ element.partChangeNames || 'N/A'  }}</p>
+          
+         <div class="downloadimages" *ngIf="imageURLs?.length > 0 && isImageDivVisible">
+          <div class="img-box" *ngFor="let imageUrl of imageURLs; let i = index">
+            <img [src]="imageUrl" alt="Servicing Image" width="100px" height="100px" />
+            <button  class="download-btn" (click)="downloadImage('image', i)">
+              <i class="fas fa-download"></i>
+            </button>
+          </div>
+          <p *ngIf="!imageURLs || imageURLs.length === 0">Image is not available</p>
+        </div>
+       
+      </div>
+
+      <!-- Part Mapping Details -->
+      <div class="part-mapping-details">
+        <h3>Part Mapping Details:</h3>
+        <table class="servicing-table">
+          <thead>
+            <tr>
+              <th colspan="2">Part Information</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Part Name</td>
+              <td>{{ element.partMapping?.partChange?.partName || 'N/A'}}</td>
+            </tr>
+            <tr>
+              <td>Brand Name</td>
+              <td>{{ element.partMapping?.partChange?.brandName|| 'N/A' }}</td>
+            </tr>
+            <tr>
+              <td>Remark</td>
+              <td>{{ element.partMapping?.partChange?.remark || 'N/A' }}</td>
+            </tr>
+            <tr>
+              <td>Serial Number</td>
+              <td>{{ element.partMapping?.serialNumber || 'N/A' }}</td>
+            </tr>
+            <tr>
+              <td>Vendor Name</td>
+              <td>{{ element.partMapping?.vendorName || 'N/A' }}</td>
+            </tr>
+            <tr>
+              <td>Vehicle Km</td>
+              <td>{{ element.partMapping?.vehiclekm || 'N/A' }}</td>
+            </tr>
+            <tr>
+              <td>Date of Purchase</td>
+              <td>{{ element.partMapping?.dateOfPurchase? (element.partMapping?.dateOfPurchase | date:'yyyy-MM-dd') : 'N/A'}}</td>
+            </tr>
+            <tr>
+              <td>Date of Validity</td>
+              <td>{{ element.partMapping?.dateOfValidity? (element.partMapping?.dateOfValidity | date:'yyyy-MM-dd') : 'N/A' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Payment Receipt Name -->
+      <div class="payment-receipt">
+        <strong>Payment Receipt:</strong>
+
+        <button class="view-btn" (click)="findpayment()">
+          <i class="fas fa-eye"></i>
+        </button>
+        
+        
+        <div class="downloadimages" *ngIf="paymentURLs?.length > 0 && isImageDivVisible">
+          <div class="img-box" *ngFor="let imageUrl of paymentURLs; let i = index">
+            <img [src]="imageUrl" alt="Servicing Image" width="100px" height="100px" />
+            <button  class="download-btn" (click)="downloadImage('payment')">
+              <i class="fas fa-download"></i>
+            </button>
+          </div> 
+          <p *ngIf="!paymentURLs || paymentURLs.length === 0">Image is not available</p>
+         </div> 
+       
+
+        
+        <p>{{ element.paymentReceiptName ||'N/A' }}</p>
+      </div>
+
+      <!-- Approval Status
+      <div class="approval-status">
+        <strong>Status:</strong>
+        <p>{{ element.approved ? 'Approved' : 'Waiting for Approval' }}</p>
+      </div> -->
+    </div>
+
+    
+  </div>
+</div>

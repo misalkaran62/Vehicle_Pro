@@ -1,0 +1,637 @@
+<section class="OuterDiv">
+
+
+  <div class="Heading-content">
+    <h1 class="vehicle_heading">Vehicle info</h1>
+
+    <div class="mainBox">
+      <div class="actions">
+        <button mat-button [matMenuTriggerFor]="addMenu" style="justify-content: left;">Add New Document</button>
+        <mat-menu #addMenu="matMenu">
+          <button mat-menu-item (click)="openDialog('permit')">Add Vehicle Permit</button>
+          <button mat-menu-item (click)="openDialog('insurance')">Add Vehicle Insurance</button>
+          <button mat-menu-item (click)="openDialog('fitness')">Add Vehicle Fitness</button>
+          <button mat-menu-item (click)="openDialog('roadTax')">Add Vehicle Road Tax</button>
+          <button mat-menu-item (click)="openDialog('puc')">Add Vehicle PUC</button>
+          <button mat-menu-item (click)="openDialog('partMapping')">Add Part Mapping</button>
+          <!-- <button mat-menu-item (click)="openDialog('servicing')">Add Vehicle Servicing</button> -->
+        </mat-menu>
+      </div>
+      <div class="actions">
+        <!-- Dropdown Menu for Data Selection -->
+        <button mat-button [matMenuTriggerFor]="vehicleMenu">Select Vehicle Info</button>
+        <!-- Dropdown menu for toggling tables -->
+        <mat-menu #vehicleMenu="matMenu">
+          <button mat-menu-item (click)="showTable(null)">Show All</button>
+          <button mat-menu-item (click)="showTable('generalInfo')" [ngClass]="{
+            'hover-soon': renewalDue === 'SOON',
+            'hover-expired': renewalDue === 'EXPIRED',
+            'hover-later': renewalDue === 'LATER'
+          }">General Information</button>
+          <button mat-menu-item (click)="showTable('branchInfo')" [ngClass]="{
+    'hover-soon': renewalDue === 'SOON',
+    'hover-expired': renewalDue === 'EXPIRED',
+    'hover-later': renewalDue === 'LATER'
+  }">Branch Information</button>
+          <button mat-menu-item (click)="showTable('rcBook')" [ngClass]="{
+    'hover-soon': renewalDue === 'SOON',
+    'hover-expired': renewalDue === 'EXPIRED',
+    'hover-later': renewalDue === 'LATER'
+  }">RC Book Details</button>
+          <button mat-menu-item (click)="showTable('description')" [ngClass]="{
+    'hover-soon': renewalDue === 'SOON',
+    'hover-expired': renewalDue === 'EXPIRED',
+    'hover-later': renewalDue === 'LATER'
+  }">Vehicle Description</button>
+          <button mat-menu-item (click)="showTable('finances')" [ngClass]="{
+    'hover-soon': renewalDue === 'SOON',
+    'hover-expired': renewalDue === 'EXPIRED',
+    'hover-later': renewalDue === 'LATER'
+  }">Vehicle Finances</button>
+          <button mat-menu-item (click)="showTable('fitness')" [ngClass]="{
+    'hover-soon': renewalDue === 'SOON',
+    'hover-expired': renewalDue === 'EXPIRED',
+    'hover-later': renewalDue === 'LATER'
+  }">Vehicle Fitness</button>
+          <button mat-menu-item (click)="showTable('insurance')" [ngClass]="{
+    'hover-soon': renewalDue === 'SOON',
+    'hover-expired': renewalDue === 'EXPIRED',
+    'hover-later': renewalDue === 'LATER'
+  }">Vehicle Insurances</button>
+          <button mat-menu-item (click)="showTable('permits')" (click)="showTable('generalInfo')" [ngClass]="{
+    'hover-soon': renewalDue === 'SOON',
+    'hover-expired': renewalDue === 'EXPIRED',
+    'hover-later': renewalDue === 'LATER'
+  }">Vehicle Permits</button>
+          <button mat-menu-item (click)="showTable('puc')" [ngClass]="{
+    'hover-soon': renewalDue === 'SOON',
+    'hover-expired': renewalDue === 'EXPIRED',
+    'hover-later': renewalDue === 'LATER'
+  }">Vehicle PUCs</button>
+          <button mat-menu-item (click)="showTable('roadTaxes')" [ngClass]="{
+            'hover-soon': renewalDue === 'SOON',
+            'hover-expired': renewalDue === 'EXPIRED',
+            'hover-later': renewalDue === 'LATER'
+          }">Vehicle Road Taxes</button>
+          <!-- <button mat-menu-item (click)="showTable('servicing')" [ngClass]="{
+            'hover-soon': renewalDue === 'SOON',
+            'hover-expired': renewalDue === 'EXPIRED',
+            'hover-later': renewalDue === 'LATER'
+          }">Vehicle Servicings</button> -->
+          <button mat-menu-item (click)="showTable('partMapping')">Part Mappings </button>
+        </mat-menu>
+      </div>
+    </div>
+
+    <!-- General Vehicle Information -->
+  </div>
+
+  <div class="tableBox">
+    <div *ngIf="!selectedTable || selectedTable === 'generalInfo'">
+      <table class="my_table table_scoll" *ngIf="vehicle">
+        <thead>
+          <tr>
+            <th colspan="2">General Information</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Vehicle ID</td>
+            <td>{{ vehicle.vehicleId }}</td>
+          </tr>
+          <tr>
+            <td>Vehicle Number</td>
+            <td>{{ vehicle.vehicleReg }}</td>
+          </tr>
+          <tr>
+            <td>Status</td>
+            <td>{{ vehicle.vehicleStatus || 'NA'}}</td>
+          </tr>
+          <tr>
+            <td>Vehicle Type</td>
+            <td>{{ vehicle.vehicleType || 'NA' }}</td>
+          </tr>
+          <tr>
+            <td>Vehicle Brand</td>
+            <td>{{ vehicle.vehicleBrand || 'NA' }}</td>
+          </tr>
+          <tr>
+            <td>Vehicle Model</td>
+            <td>{{ vehicle.vehicleModel || 'NA' }}</td>
+          </tr>
+          <tr>
+            <td>Created By</td>
+            <td>{{ vehicle.createdByEmail || 'NA' }}</td>
+          </tr>
+          <tr>
+            <td>Image</td>
+            <td> <button class="view-btn" (click)="openVehicleDetails('vehicle', vehicle.vehicleId)">
+                <i class="fas fa-eye"></i>
+              </button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Branch Information -->
+    <div *ngIf="!selectedTable || selectedTable === 'branchInfo'">
+      <table class="my_table" *ngIf="vehicle?.branch">
+        <thead>
+          <tr>
+            <th colspan="2">Branch Information</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Branch ID</td>
+            <td>{{ vehicle?.branch?.id }}</td>
+          </tr>
+          <tr>
+            <td>Branch Name</td>
+            <td>{{ vehicle?.branch?.branchName || 'NA' }}</td>
+          </tr>
+          <tr>
+            <td>Contact Person</td>
+            <td>{{ vehicle?.branch?.branchContactPerson || 'NA' }}</td>
+          </tr>
+          <tr>
+            <td>Contact Number</td>
+            <td>{{ vehicle?.branch?.branchContactPersonMobile || 'NA' }}</td>
+          </tr>
+          <tr>
+            <td>Location</td>
+            <td>{{ vehicle?.branch?.branchLocation || 'NA' }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <div *ngIf="!selectedTable || selectedTable === 'rcBook'">
+      <table class="my_table" *ngIf="vehicle?.vehicleRCBook">
+        <thead>
+          <tr>
+            <th colspan="2">Rc Book Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Rc Book ID</td>
+            <td>{{ vehicle.vehicleRCBook?.id }}</td>
+          </tr>
+          <tr>
+            <td>Owner Type</td>
+            <td>{{ vehicle.vehicleRCBook?.ownerType || 'NA' }}</td>
+          </tr>
+          <tr>
+            <td>Rc Receipt No</td>
+            <td>{{ vehicle.vehicleRCBook?.rcBookReceiptNo || 'NA' }}</td>
+          </tr>
+          <tr>
+            <td>StartDate</td>
+            <td>{{ vehicle.vehicleRCBook?.startDate | date}}</td>
+          </tr>
+          <tr>
+            <td>Image</td>
+            <td> <button class="view-btn" (click)="openVehicleDetails('rcbook', vehicle.vehicleRCBook.id)">
+                <i class="fas fa-eye"></i>
+              </button></td>
+            <!-- <td>Action</td>
+          <td> <button class="update-btn">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="delete-btn">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td> -->
+          </tr>
+
+        </tbody>
+      </table>
+
+    </div>
+
+
+    <div *ngIf="!selectedTable || selectedTable === 'description'">
+      <!-- Vehicle Description -->
+      <table class="my_table" *ngIf="vehicle.vehicleDescription">
+        <thead>
+          <tr>
+            <th colspan="2">Vehicle Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Manufacturing Year</td>
+            <td>{{ vehicle.vehicleDescription?.manufacturingYear || 'NA' }}</td>
+          </tr>
+          <tr>
+            <td>Color</td>
+            <td>{{ vehicle.vehicleDescription?.color || 'NA' }}</td>
+          </tr>
+          <tr>
+            <td>Registration Number</td>
+            <td>{{ vehicle.vehicleDescription?.registrationNumber || 'NA'}}</td>
+          </tr>
+          <tr>
+            <td>Engine Number</td>
+            <td>{{ vehicle.vehicleDescription?.engineNumber || 'NA' }}</td>
+          </tr>
+          <tr>
+            <td>Chassis Number</td>
+            <td>{{ vehicle.vehicleDescription?.chasisNumber || 'NA' }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <div *ngIf="!selectedTable || selectedTable === 'finances'">
+      <!-- Vehicle Finances -->
+      <table class="my_table"
+        *ngIf="vehicle.vehicleFinances?.length && vehicle.vehicleFinances[0].financeType === 'loan'">
+        <thead>
+          <tr>
+            <th colspan="9">Vehicle Finances (Loan)</th>
+          </tr>
+          <tr>
+            <th>Finance Id</th>
+            <th>Finance Type</th>
+            <th>Finance Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Loan Amount</th>
+            <th>Interest Rate</th>
+            <th>EMI Amount</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let finance of vehicle.vehicleFinances">
+            <td>{{ finance.finance_id  }}</td>
+            <td>{{ finance.financeType || 'NA' }}</td>
+            <td>{{ finance.financeName || 'NA' }}</td>
+            <td>{{ finance.startDate | date }}</td>
+            <td>{{ finance.endDate | date }}</td>
+            <td>{{ finance.purchaseAmount | currency:'INR' }}</td>
+            <td>{{ finance.rateOfInterest }}%</td>
+            <td>{{ finance.emiAmount | currency:'INR' }}</td>
+            <td>
+
+              <button class="delete-btn" (click)="deleteRow(finance.finance_id,'Finances')">
+                <i class="fas fa-trash"></i>
+              </button>
+              <button class="view-btn" (click)="openVehicleDetails('finance', finance.finance_id)">
+                <i class="fas fa-eye"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="my_table"
+        *ngIf="vehicle.vehicleFinances?.length && vehicle.vehicleFinances[0].financeType === 'cash'">
+        <thead>
+          <tr>
+            <th colspan="5">Vehicle Finances (Cash)</th>
+          </tr>
+          <tr>
+            <th>Finance ID</th>
+            <th>Finance Type</th>
+            <th>Purchase Date</th>
+            <th>Purchase Amount</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let finance of vehicle.vehicleFinances">
+            <td>{{ finance.finance_id }}</td>
+            <td>{{ finance.financeType || 'NA'}}</td>
+            <td>{{ finance.purchaseDate | date }}</td>
+            <td>{{ finance.purchaseAmount | currency:'INR' }}</td>
+            <td>
+              <button class="delete-btn" (click)="deleteRow(finance.finance_id,'Finances')">
+                <i class="fas fa-trash"></i>
+              </button>
+              <button class="view-btn" (click)="openVehicleDetails('repaymentSchedule', finance.finance_id)">
+                Repayment Schedule
+              </button>
+
+              <button class="view-btn" (click)="openVehicleDetails('sanctionLetter', finance.finance_id)">
+                Sanction Letter
+              </button>
+
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Vehicle Fitness -->
+    <div *ngIf="!selectedTable || selectedTable === 'fitness'">
+      <table class="my_table" *ngIf="vehicle.vehicleFitnesses?.length">
+        <thead>
+          <tr>
+            <th colspan="6">Vehicle Fitness</th>
+          </tr>
+          <tr>
+            <th>Fitness ID</th>
+            <th>Receipt No</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Expired status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let fitness of vehicle.vehicleFitnesses">
+            <td>{{ fitness.fitnessId }}</td>
+            <td>{{fitness.fitnessReceiptNO || 'NA'}}</td>
+            <td>{{ fitness.startDate | date }}</td>
+            <td>{{ fitness.endDate | date }}</td>
+            <td>
+              <span class="status" [ngClass]="{
+                'completed': fitness?.renewalDue == 'LATER',
+                'process': fitness?.renewalDue == 'SOON',
+                'pending': fitness?.renewalDue == 'EXPIRED',
+             
+              }">{{fitness.renewalDue}}</span>
+
+
+            </td>
+            <td> <button class="update-btn" (click)="openDialogForUpdate(fitness.fitnessId,'fitness', fitness)">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="delete-btn" (click)="deleteRow(fitness.fitnessId,'Fitness')">
+                <i class="fas fa-trash"></i>
+              </button>
+              <button class="view-btn" (click)="openVehicleDetails('fitness', fitness.fitnessId)">
+                <i class="fas fa-eye"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="!selectedTable || selectedTable === 'insurance'">
+      <!-- Vehicle Insurances -->
+      <table class="my_table" *ngIf="vehicle.vehicleInsurances?.length">
+        <thead>
+          <tr>
+            <th colspan="8">Vehicle Insurance</th>
+          </tr>
+          <tr>
+            <th>Policy Id</th>
+            <th>Policy Number</th>
+            <th>Insurance Type</th>
+            <th>Insurance Company</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Expired status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let insurance of vehicle?.vehicleInsurances">
+            <td>{{ insurance.insuranceId }}</td>
+
+            <td>{{ insurance.insuranceNumber }}</td>
+            <td>{{ insurance.insuranceType || 'NA' }}</td>
+            <td>{{ insurance.insuranceCompany || 'NA' }}</td>
+            <td>{{ insurance.startDate | date }}</td>
+            <td>{{ insurance.endDate | date }}</td>
+            <td>
+              <span class="status" [ngClass]="{
+                'completed': insurance?.renewalDue == 'LATER',
+                'process': insurance?.renewalDue == 'SOON',
+                'pending': insurance?.renewalDue == 'EXPIRED',
+             
+              }">{{insurance.renewalDue}}</span>
+            </td>
+            <td> <button class="update-btn" (click)="openDialogForUpdate(insurance.insuranceId,'Insurance', insurance)">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="delete-btn" (click)="deleteRow(insurance.insuranceId,'Insurance')">
+                <i class="fas fa-trash"></i>
+              </button>
+              <button class="view-btn" (click)="openVehicleDetails('insurance', insurance.insuranceId)">
+                <i class="fas fa-eye"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="!selectedTable || selectedTable === 'permits'">
+      <!-- Vehicle Permits -->
+      <table class="my_table" *ngIf="vehicle.vehiclePermits?.length">
+        <thead>
+          <tr>
+            <th colspan="7">Vehicle Permits</th>
+          </tr>
+          <tr>
+            <th>Permit id</th>
+            <th>Receipt No</th>
+            <th>Permit Type</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Expired Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let permit of vehicle.vehiclePermits">
+            <td>{{ permit.permitId }}</td>
+            <td>{{ permit.permitReceiptNo || 'NA' }}</td>
+            <td>{{ permit.permitType || 'NA' }}</td>
+            <td>{{ permit.startDate | date }}</td>
+            <td>{{ permit.endDate | date }}</td>
+            <td>
+              <span class="status" [ngClass]="{
+                'completed': permit?.renewalDue == 'LATER',
+                'process': permit?.renewalDue == 'SOON',
+                'pending': permit?.renewalDue == 'EXPIRED',
+             
+              }">{{permit.renewalDue}}</span>
+            </td>
+            <td> <button class="update-btn" (click)="openDialogForUpdate(permit.permitId,'permits', permit)">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="delete-btn" (click)="deleteRow(permit.permitId,'permits')">
+                <i class="fas fa-trash"></i>
+              </button>
+              <button class="view-btn" (click)="openVehicleDetails('permit', permit.permitId)">
+                <i class="fas fa-eye"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <div *ngIf="!selectedTable || selectedTable === 'puc'">
+      <!-- Vehicle PUCs -->
+      <table class="my_table" *ngIf="vehicle.vehiclePUCs?.length">
+        <thead>
+          <tr>
+            <th colspan="6">Vehicle Pollution Under Control (PUC)</th>
+          </tr>
+          <tr>
+            <th>PUC ID</th>
+            <th>ReceiptNo</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Expired Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let puc of vehicle.vehiclePUCs">
+            <td>{{ puc.pucId }}</td>
+            <td>{{puc.pucReceiptNo || 'NA'}}</td>
+            <td>{{ puc.startDate | date }}</td>
+            <td>{{ puc.endDate | date }}</td>
+
+            <td>
+
+
+              <span class="status" [ngClass]="{
+                'completed': puc?.renewalDue == 'LATER',
+                'process': puc?.renewalDue == 'SOON',
+                'pending': puc?.renewalDue == 'EXPIRED',
+             
+              }">{{puc.renewalDue}}</span>
+            </td>
+            <td> <button class="update-btn" (click)="openDialogForUpdate(puc.pucId,'PUCs', puc)">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="delete-btn" (click)="deleteRow(puc.pucId,'vehiclePUCs')">
+                <i class="fas fa-trash"></i>
+              </button>
+              <button class="view-btn" (click)="openVehicleDetails('pucs', puc.pucId)">
+                <i class="fas fa-eye"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="!selectedTable || selectedTable === 'roadTaxes'">
+      <!-- Vehicle Road Taxes -->
+      <table class="my_table" *ngIf="vehicle.vehicleRoadTaxes?.length">
+        <thead>
+          <tr>
+            <th colspan="7">Vehicle Road Taxes</th>
+          </tr>
+          <tr>
+            <th>Tax Id</th>
+            <th>ReceiptNo</th>
+            <th>Tax Type</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Expired Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let tax of vehicle.vehicleRoadTaxes">
+            <td>{{ tax.roadTaxId}}</td>
+            <td>{{tax.roadTaxReceiptNo || 'NA'}}</td>
+            <td>{{ tax.taxType || 'NA' }}</td>
+            <td>{{ tax.startDate | date }}</td>
+            <td>{{ tax.endDate | date }}</td>
+            <!-- mapping?.dateOfPurchase ? (mapping.dateOfPurchase | date) : 'NA'  -->
+            <td> <span class="status" [ngClass]="{
+              'completed': tax?.renewalDue == 'LATER',
+              'process': tax?.renewalDue == 'SOON',
+              'pending': tax?.renewalDue == 'EXPIRED',
+           
+            }">{{tax.renewalDue}}</span></td>
+            <td> <button class="update-btn" (click)="openDialogForUpdate(tax.roadTaxId,'Road Taxes', tax)">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="delete-btn" (click)="deleteRow(tax.roadTaxId,'RoadTaxes')">
+                <i class="fas fa-trash"></i>
+              </button>
+              <button class="view-btn" (click)="openVehicleDetails('roadtaxes', tax.roadTaxId)">
+                <i class="fas fa-eye"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="!selectedTable || selectedTable === 'partMapping'">
+      <!-- Vehicle Road Taxes -->
+      <table class="my_table" *ngIf="vehicle.partMappings?.length">
+        <thead>
+          <tr>
+            <th colspan="8">Vehicle Part Mappings</th>
+          </tr>
+          <tr>
+            <th>Part mapping id</th>
+            <th>Serial No.</th>
+            <th>Vendor name</th>
+            <th>Date of Purchase</th>
+            <th>Date of Validity</th>
+            <th>Part Name</th>
+            <th>Brand Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let mapping of vehicle.partMappings">
+            <td>{{ mapping.id || 'NA' }}</td>
+            <td>{{mapping.serialNumber || 'NA' }}</td>
+            <td>{{ mapping?.vendorName || 'NA'  }}</td>
+            <td>{{ mapping?.dateOfPurchase ? (mapping.dateOfPurchase | date) : 'NA'   }}</td>
+            <td>{{ mapping?.dateOfValidity ? (mapping.dateOfValidity | date) : 'NA'  }}</td>
+            <td>{{ mapping.partChange?.partName || 'NA'  }}</td> 
+          <td>{{ mapping.partChange?.brandName || 'NA'  }}</td>
+
+            <td> <button class="update-btn" (click)="openDialogForUpdate(mapping.id,'Part Mapping', mapping)">
+                <i class="fas fa-edit"></i>
+              </button>
+
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- <div *ngIf="!selectedTable || selectedTable === 'servicing'">
+ 
+      <table class="my_table" *ngIf="vehicle.vehicleServicings?.length">
+        <thead>
+          <tr>
+            <th colspan="5">Vehicle Servicing Records</th>
+          </tr>
+          <tr>
+            <th>Service ID</th>
+            <th>Service Date</th>
+            <th>Service Description</th>
+            <th>Next Km Servicing</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let service of vehicle.vehicleServicings">
+            <td>{{ service.servicingId }}</td>
+            <td>{{ service.servicingDate | date }}</td>
+            <td>{{ service.servicingDescription }}</td>
+            <td>{{ service.nextKmServicing }}</td>
+            <td> <button class="update-btn" (click)="openDialogForUpdate(service.servicingId,'Servicings', service)">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="delete-btn" (click)="deleteRow(service.servicingId,'vehicleServicings')">
+                <i class="fas fa-trash"></i>
+              </button>
+              <button class="view-btn"  (click)="openVehicleDetails('document', service.servicingId)">
+                <i class="fas fa-eye"></i> 
+            </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div> -->
+  </div>
+</section>

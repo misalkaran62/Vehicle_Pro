@@ -1,0 +1,759 @@
+<mat-horizontal-stepper [linear]="true" [formGroup]="vehicleForm">
+
+
+  <!-- Step 1: Vehicle Info -->
+  <mat-step [stepControl]="vehicleInfo">
+
+
+    <ng-template matStepLabel>Basic</ng-template>
+
+    <form [formGroup]="vehicleInfo" class="content" >
+      <div class="form-field-row ">
+        <mat-form-field appearance="outline">
+          <mat-label>Registration Number</mat-label>
+          <input matInput formControlName="registrationNumber" placeholder="MH20CF2565">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Vehicle Type</mat-label>
+          <mat-select formControlName="vehicleType" required>
+            <mat-option *ngFor="let type of vehicleTypes" [value]="type">
+              {{ type }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Vehicle Manufacturer</mat-label>
+          <input matInput formControlName="vehicleBrand" placeholder="Manufacturer by">
+        </mat-form-field>
+      </div>
+      <div class="form-field-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Vehicle Model</mat-label>
+          <input matInput formControlName="vehicleModel" placeholder="Enter Vehicle Model Name">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>select Branch</mat-label>
+          <mat-select formControlName="branch" required>
+            <mat-option *ngFor="let branch of branches" [value]="branch.id">
+              {{ branch.branchName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Color</mat-label>
+          <mat-select formControlName="color">
+            <mat-option *ngFor="let color of colorOptions" [value]="color">
+              {{ color }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-field-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Manufacturing Year</mat-label>
+          <input matInput formControlName="manufacturingYear" type="number" required>
+        </mat-form-field>
+
+
+
+        <mat-form-field appearance="outline">
+          <mat-label>Engine Number</mat-label>
+          <input matInput formControlName="engineNumber" placeholder="Enter Vehicle Engine Number">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Chassis Number</mat-label>
+          <input matInput formControlName="chasisNumber" placeholder="Enter Vehicle Chassis Number">
+        </mat-form-field>
+      </div>
+      <div class="form-field-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Fuel Type</mat-label>
+          <mat-select formControlName="fuelType">
+            <mat-option *ngFor="let fuel of fuelTypes" [value]="fuel">
+              {{ fuel }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Fuel Measurement</mat-label>
+          <mat-select formControlName="fuelMeasurement">
+            <mat-option *ngFor="let fuelMeasurement of fuelMeasurements" [value]="fuelMeasurement">
+              {{ fuelMeasurement }}
+            </mat-option>
+          </mat-select>
+
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Track Usages</mat-label>
+          <mat-select formControlName="truckUsages">
+            <mat-option value="KILOMETERS">
+              KILOMETERS
+            </mat-option>
+          </mat-select>
+
+        </mat-form-field>
+      </div>
+
+      <div class="form-field-row">
+        <mat-label>Secondary Meter</mat-label>
+        <mat-checkbox formControlName="secondaryMeter"></mat-checkbox>
+        <input type="file" id="vehicleImage" (change)="onFileSelected($event, 'vehicleImage')" required>
+        <label class="fileBtn" for="vehicleImage">
+          <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-width="2" stroke="#fffffff"
+              d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+              stroke-linejoin="round" stroke-linecap="round"></path>
+            <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#fffffff"
+              d="M17 15V18M17 21V18M17 18H14M17 18H20"></path>
+          </svg>
+          {{
+          isUpdate && !this.selectedFiles.vehicleImage?.name
+          ? (vehicleForm.value.vehicleInfo?.vehicleImage||'Select File')
+          : (this.selectedFiles.vehicleImage?.name  )
+          }}
+
+
+        </label>
+      </div>
+
+      <h1>RC Details</h1>
+      <div class="form-field-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Owner Name</mat-label>
+          <input matInput formControlName="ownerType" type="text" placeholder="Enter Owner Name">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Rc Receipt No</mat-label>
+          <input matInput formControlName="rcBookReceiptNo" placeholder="Enter Rc Receipt No">
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline">
+          <mat-label>Start Date</mat-label>
+          <input matInput [matDatepicker]="picker1" formControlName="startDate">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+
+
+
+
+      </div>
+
+      <div class="form-field-row">
+        <input type="file" id="rcReceipt" (change)="onFileSelected($event, 'rcReceipt')" required>
+        <label class="fileBtn" for="rcReceipt">
+          <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-width="2" stroke="#fffffff"
+              d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+              stroke-linejoin="round" stroke-linecap="round"></path>
+            <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#fffffff"
+              d="M17 15V18M17 21V18M17 18H14M17 18H20"></path>
+          </svg>
+
+          {{
+          isUpdate && !this.selectedFiles.rcReceipt?.name
+          ? (vehicleForm.value.vehicleInfo?.rcbookName|| 'Select File')
+          : (this.selectedFiles.rcReceipt?.name || 'Select File')
+          }}
+
+
+        </label>
+      </div>
+      <div class="form-field-row">
+
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+
+  </mat-step>
+  <mat-step [stepControl]="vehicleFinances">
+    <ng-template matStepLabel>Finances</ng-template>
+
+    <div formGroupName="vehicleFinances" class="content">
+      <div class="form-field-row">
+        <!-- Finance Type Selection -->
+        <mat-form-field appearance="outline">
+          <mat-label>Finance Type</mat-label>
+          <mat-select formControlName="financeType">
+            <mat-option *ngFor="let item of financeTypeData" [value]="item">{{item}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Purchase Amount -->
+        <mat-form-field appearance="outline">
+          <mat-label>Purchase Amount</mat-label>
+          <input matInput formControlName="purchaseAmount" type="number"> 
+        </mat-form-field>
+
+        <!-- Purchase Date -->
+        <mat-form-field appearance="outline">
+          <mat-label>Purchase Date</mat-label>
+          <input matInput [matDatepicker]="picker3" formControlName="purchaseDate">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
+          <mat-datepicker #picker3></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <!-- Conditional Fields for Loan Type -->
+      <div *ngIf="vehicleForm.get('vehicleFinances').get('financeType').value === 'loan'">
+        <div class="form-field-row">
+          <!-- Finance Name -->
+          <mat-form-field appearance="outline">
+            <mat-label>Finance Name</mat-label>
+            <input matInput formControlName="financeName">
+          </mat-form-field>
+
+          <!-- Start Date -->
+          <mat-form-field appearance="outline">
+            <mat-label>EMI Start Date</mat-label>
+            <input matInput [matDatepicker]="picker1" formControlName="startDate">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+
+          <!-- End Date -->
+          <mat-form-field appearance="outline">
+            <mat-label> EMI End Date</mat-label>
+            <input matInput [matDatepicker]="picker2" formControlName="endDate">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="form-field-row">
+          <!-- Loan Amount -->
+          <mat-form-field appearance="outline">
+            <mat-label>Emi Amount</mat-label>
+            <input matInput formControlName="emiAmount" type="number">
+          </mat-form-field>
+
+          <!-- Rate of Interest -->
+          <mat-form-field appearance="outline">
+            <mat-label>Rate of Interest</mat-label>
+            <input matInput formControlName="rateOfInterest" type="number">
+          </mat-form-field>
+
+          <!-- EMI Date -->
+          <mat-form-field appearance="outline">
+            <mat-label>EMI Date</mat-label>
+            <input matInput formControlName="emiDate" type="number">
+          </mat-form-field>
+        </div>
+
+        <div class="form-field-row" *ngIf="isUpdate">
+          <!-- Force Closure Amount -->
+          <mat-form-field appearance="outline">
+            <mat-label>Force Closure Amount</mat-label>
+            <input matInput formControlName="forceClosureAmount" type="number">
+          </mat-form-field>
+
+          <!-- Force Closure Date -->
+          <mat-form-field appearance="outline">
+            <mat-label>Force Closure Date</mat-label>
+            <input matInput [matDatepicker]="picker3" formControlName="forceClosureDate">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
+            <mat-datepicker #picker3></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="form-field-row">
+
+        <!-- Tax Receipt (File Upload) -->
+
+
+        <input type="file" id="repaymentSchedule" (change)="onFileSelected($event, 'repaymentSchedule')" required>
+        <label class="fileBtn" for="repaymentSchedule">
+          <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-width="2" stroke="#ffffff"
+              d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+              stroke-linejoin="round" stroke-linecap="round"></path>
+            <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#ffffff"
+              d="M17 15V18M17 21V18M17 18H14M17 18H20"></path>
+          </svg>
+
+          {{
+          isUpdate && !this.selectedFiles.repaymentSchedule?.name
+          ? (vehicleForm.value.vehicleFinances?.nocReceiptName||'Select File for Repayment Schedule')
+          : (this.selectedFiles.repaymentSchedule?.name || 'Select File for Repayment Schedule')
+          }}
+
+        </label>
+        <input type="file" id="sanctionLetter" (change)="onFileSelected($event, 'sanctionLetter')" required>
+        <label class="fileBtn" for="sanctionLetter">
+          <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-width="2" stroke="#ffffff"
+              d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+              stroke-linejoin="round" stroke-linecap="round"></path>
+            <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#ffffff"
+              d="M17 15V18M17 21V18M17 18H14M17 18H20"></path>
+          </svg>
+
+          {{
+          isUpdate && !this.selectedFiles.sanctionLetter?.name
+          ? (vehicleForm.value.vehicleFinances?.nocReceiptName||'Select File for Sanction Letter')
+          : (this.selectedFiles.sanctionLetter?.name || 'Select File for Sanction Letter')
+          }}
+
+        </label>
+
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="form-field-row">
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+
+
+
+
+  <mat-step [stepControl]="vehicleForm.get('vehicleFitnesses')" > 
+    <ng-template matStepLabel>Fitnesses</ng-template>
+
+    <div formGroupName="vehicleFitnesses" class="content">
+  
+
+      <div class="form-field-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Fitness Receipt No</mat-label>
+          <input matInput formControlName="fitnessReceiptNO">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Start Date</mat-label>
+          <input matInput [matDatepicker]="pickerStartDate" formControlName="startDate">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+          <mat-datepicker #pickerStartDate></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>End Date</mat-label>
+          <input matInput [matDatepicker]="pickerEndDate" formControlName="endDate">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+          <mat-datepicker #pickerEndDate></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="form-field-row">
+        <input type="file" id="fitnessReceipt" (change)="onFileSelected($event, 'fitnessReceipt')" required>
+        <label class="fileBtn" for="fitnessReceipt">
+          <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-width="2" stroke="#fffffff"
+              d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+              stroke-linejoin="round" stroke-linecap="round"></path>
+            <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#fffffff"
+              d="M17 15V18M17 21V18M17 18H14M17 18H20"></path>
+          </svg>
+
+          {{
+          isUpdate && !this.selectedFiles.fitnessReceipt?.name
+          ? (vehicleForm.value.vehicleFitnesses?.fitnessReceiptName|| 'Select File')
+          : (this.selectedFiles.fitnessReceipt?.name || 'Select File')
+          }}
+
+
+        </label>
+      </div>
+
+    </div>
+
+
+    <div class="form-field-row">
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+
+
+
+  <mat-step [stepControl]="vehicleInsurances.at(0)">
+    <ng-template matStepLabel>Insurances</ng-template>
+
+    <div formArrayName="vehicleInsurances" class="content">
+      <div *ngFor="let insurance of vehicleInsurances.controls; let i = index" [formGroupName]="i">
+        <div class="form-field-row">
+          <!-- Insurance Number -->
+          <mat-form-field appearance="outline">
+            <mat-label>Insurance Policy Number</mat-label>
+            <input matInput formControlName="insuranceNumber">
+          </mat-form-field>
+
+          <!-- Insurance Type -->
+          <mat-form-field appearance="outline">
+            <mat-label>Insurance Type</mat-label>
+            <mat-select formControlName="insuranceType">
+              <mat-option value="First_party">First party</mat-option>
+              <mat-option value="Third_party">Third party</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Insurance Company -->
+          <mat-form-field appearance="outline">
+            <mat-label>Insurance Company Name</mat-label>
+            <input matInput formControlName="insuranceCompany">
+          </mat-form-field>
+
+          <!-- Start Date -->
+          <mat-form-field appearance="outline">
+            <mat-label>Start Date</mat-label>
+            <input matInput [matDatepicker]="startDatePicker" formControlName="startDate">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #startDatePicker></mat-datepicker>
+          </mat-form-field>
+
+          <!-- End Date -->
+          <mat-form-field appearance="outline">
+            <mat-label>End Date</mat-label>
+            <input matInput [matDatepicker]="endDatePicker" formControlName="endDate">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #endDatePicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="form-field-row">
+          <!-- File Upload -->
+          <input type="file" id="insuranceReceipt-{{ i }}" (change)="onFileSelecteds($event, 'insurance', i)" multiple>
+          <label class="fileBtn" for="insuranceReceipt-{{ i }}">
+            <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-width="2" stroke="#ffffff"
+                d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+                stroke-linejoin="round" stroke-linecap="round"></path>
+              <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#ffffff"
+                d="M17 15V18M17 21V18M17 18H14M17 18H20"></path>
+            </svg>
+
+            <!-- Display File Name -->
+            <span *ngIf="isUpdate && vehicleForm.value.vehicleInsurances[i]?.insuranceReceiptName; else newFile">
+              {{ vehicleForm.value.vehicleInsurances[i]?.insuranceReceiptName }}
+            </span>
+            <ng-template #newFile>
+              <span *ngIf="uploadedInsuranceFiles[i]?.length; else noFile">
+                <span *ngFor="let file of uploadedInsuranceFiles[i]">{{ file.name || 'Select File' }}</span>
+              </span>
+              <ng-template #noFile>
+                Select File
+              </ng-template>
+            </ng-template>
+
+
+
+          </label>
+          <!--   
+          Display Uploaded Files
+          <div *ngIf="uploadedInsuranceFiles[i]?.length">
+            <p>Uploaded Files:</p>
+            <ul>
+            
+            </ul>
+          </div> -->
+
+          <!-- Add and Remove Buttons -->
+          <button mat-button class="add-btn" (click)="addGroup('insurance')"
+            *ngIf="i === vehicleInsurances.length - 1">+</button>
+          <button mat-button color="warn" class="remove-btn" (click)="removeGroup('insurance', i)"
+            *ngIf="vehicleInsurances.length > 1">-</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="form-field-row">
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+
+  <mat-step [stepControl]="vehiclePermits.at(0)">
+    <ng-template matStepLabel>Permits</ng-template>
+
+    <div formArrayName="vehiclePermits" class="content">
+      <div *ngFor="let permit of vehiclePermits.controls; let i = index" [formGroupName]="i">
+        <div class="form-field-row">
+          <!-- Permit Receipt No -->
+          <mat-form-field appearance="outline">
+            <mat-label>Permit Receipt No</mat-label>
+            <input matInput formControlName="permitReceiptNo">
+          </mat-form-field>
+
+          <!-- Permit Type -->
+          <mat-form-field appearance="outline">
+            <mat-label>Permit Type</mat-label>
+            <mat-select formControlName="permitType">
+              <mat-option value="Local">Local</mat-option>
+              <mat-option value="National">National</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Start Date -->
+          <mat-form-field appearance="outline">
+            <mat-label>Start Date</mat-label>
+            <input matInput [matDatepicker]="startDatePicker" formControlName="startDate">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #startDatePicker></mat-datepicker>
+          </mat-form-field>
+
+          <!-- End Date -->
+          <mat-form-field appearance="outline">
+            <mat-label>End Date</mat-label>
+            <input matInput [matDatepicker]="endDatePicker" formControlName="endDate">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #endDatePicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="form-field-row">
+          <!-- File Upload -->
+          <input type="file" id="permitReceipt-{{ i }}" (change)="onFileSelecteds($event, 'permit', i)" multiple
+            required>
+          <label class="fileBtn" for="permitReceipt-{{ i }}">
+            <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-width="2" stroke="#ffffff"
+                d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+                stroke-linejoin="round" stroke-linecap="round"></path>
+              <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#ffffff"
+                d="M17 15V18M17 21V18M17 18H14M17 18H20"></path>
+            </svg>
+
+
+            <!-- Display File Name -->
+            <span *ngIf="isUpdate && vehicleForm.value.vehiclePermits[i]?.permitReceiptName; else newFile">
+              {{ vehicleForm.value.vehiclePermits[i]?.permitReceiptName }}
+            </span>
+            <ng-template #newFile>
+              <span *ngIf="uploadedPermitFiles[i]?.length; else noFile">
+                <span *ngFor="let file of uploadedPermitFiles[i]">{{ file.name || 'Select File' }}</span>
+              </span>
+              <ng-template #noFile>
+                Select File
+              </ng-template>
+            </ng-template>
+
+
+          </label>
+
+
+
+          <!-- Add and Remove Buttons -->
+          <button mat-button class="add-btn" (click)="addGroup('permit')"
+            *ngIf="i === vehiclePermits.length - 1">+</button>
+          <button mat-button color="warn" class="remove-btn" (click)="removeGroup('permit', i)"
+            *ngIf="vehiclePermits.length > 1">-</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="form-field-row">
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+
+
+
+
+  <mat-step [stepControl]="vehicleForm.get('vehiclePUCs')">
+    <ng-template matStepLabel>PUCs</ng-template>
+
+    <div formGroupName="vehiclePUCs" class="content">
+      <div class="form-field-row">
+        <!-- Permit Receipt Number -->
+        <mat-form-field appearance="outline">
+          <mat-label>PUCs Receipt No</mat-label>
+          <input matInput formControlName="pucReceiptNo">
+        </mat-form-field>
+
+        <!-- Start Date with Date Picker -->
+        <mat-form-field appearance="outline">
+          <mat-label>Start Date</mat-label>
+          <input matInput [matDatepicker]="pickerPermitStart1" formControlName="startDate">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="pickerPermitStart1"></mat-datepicker-toggle>
+          <mat-datepicker #pickerPermitStart1></mat-datepicker>
+        </mat-form-field>
+        <!-- End Date with Date Picker -->
+        <mat-form-field appearance="outline">
+          <mat-label>End Date</mat-label>
+          <input matInput [matDatepicker]="pickerPermitEnd2" formControlName="endDate">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="pickerPermitEnd2"></mat-datepicker-toggle>
+          <mat-datepicker #pickerPermitEnd2></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field-row">
+
+
+        <!-- Permit Receipt (File Upload) -->
+        <input type="file" id="pucReceipt" (change)="onFileSelected($event, 'pucReceipt')" required>
+        <label class="fileBtn" for="pucReceipt">
+          <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-width="2" stroke="#ffffff"
+              d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+              stroke-linejoin="round" stroke-linecap="round"></path>
+            <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#ffffff"
+              d="M17 15V18M17 21V18M17 18H14M17 18H20"></path>
+          </svg>
+
+
+          {{
+          isUpdate && !this.selectedFiles.pucReceipt?.name
+          ? (vehicleForm.value.vehiclePUCs?.pucReceiptName||'Select File')
+          : (this.selectedFiles.pucReceipt?.name || 'Select File')
+          }}
+        </label>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="form-field-row">
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+
+  <mat-step [stepControl]="vehicleForm.get('vehicleRoadTaxes')">
+    <ng-template matStepLabel>Road Tax</ng-template>
+
+    <div formGroupName="vehicleRoadTaxes" class="content">
+      <div class="form-field-row">
+        <!-- Road Tax Receipt Number -->
+        <mat-form-field appearance="outline">
+          <mat-label>Road Tax Receipt No</mat-label>
+          <input matInput formControlName="roadTaxReceiptNo">
+        </mat-form-field>
+
+        <!-- Tax Type -->
+        <mat-form-field appearance="outline">
+          <mat-label>Tax Type</mat-label>
+          <mat-select formControlName="taxType" (selectionChange)="onTaxTypeChange()">
+            <mat-option value="LIFETIME">LIFETIME</mat-option>
+            <mat-option value="LIMITED">LIMITED</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Start Date with Date Picker -->
+        <mat-form-field appearance="outline">
+          <mat-label>Start Date</mat-label>
+          <input matInput [matDatepicker]="pickerStart" formControlName="startDate">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="pickerStart"></mat-datepicker-toggle>
+          <mat-datepicker #pickerStart></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field-row">
+        <!-- End Date with Date Picker (Conditional Display) -->
+        <mat-form-field appearance="outline" *ngIf="vehicleForm.get('vehicleRoadTaxes.taxType')?.value === 'LIMITED'">
+          <mat-label>End Date</mat-label>
+          <input matInput [matDatepicker]="pickerEnd" formControlName="endDate">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+          <mat-datepicker #pickerEnd></mat-datepicker>
+        </mat-form-field>
+
+
+      </div>
+
+
+      <div class="form-field-row">
+
+        <!-- Tax Receipt (File Upload) -->
+        <input type="file" id="taxReceipt" (change)="onFileSelected($event, 'taxReceipt')" required>
+        <label class="fileBtn" for="taxReceipt">
+          <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-width="2" stroke="#ffffff"
+              d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+              stroke-linejoin="round" stroke-linecap="round"></path>
+            <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#ffffff"
+              d="M17 15V18M17 21V18M17 18H14M17 18H20"></path>
+          </svg>
+          {{
+          isUpdate && !this.selectedFiles.taxReceipt?.name
+          ? (vehicleForm.value.vehicleRoadTaxes?.taxReceiptName||'Select File')
+          : (this.selectedFiles.taxReceipt?.name || 'Select File')
+          }}
+
+
+        </label>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="form-field-row">
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+
+
+  <mat-step [stepControl]="vehicleForm.get('vehicleServicing')">
+    <ng-template matStepLabel>Servicing</ng-template>
+
+    <div formGroupName="vehicleServicings" class="content">
+      <div class="form-field-row">
+        <!-- Next KM Servicing -->
+        <mat-form-field appearance="outline">
+          <mat-label>Next KM Servicing</mat-label>
+          <input matInput formControlName="nextKmServicing" type="number">
+          <!-- <mat-error *ngIf="vehicleServicings.nextKmServicing?.hasError('min')">
+            Value must be a positive number.
+          </mat-error> -->
+        </mat-form-field>
+
+        <!-- Servicing Vendor -->
+        <mat-form-field appearance="outline">
+          <mat-label>Servicing Vendor</mat-label>
+          <input matInput formControlName="servicingVendor">
+        </mat-form-field>
+
+        <!-- Servicing Date -->
+        <mat-form-field appearance="outline">
+          <mat-label>Servicing Date</mat-label>
+          <input matInput [matDatepicker]="pickerService" formControlName="servicingDate">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="pickerService"></mat-datepicker-toggle>
+          <mat-datepicker #pickerService></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field-row">
+        <!-- Servicing Description -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Servicing Description</mat-label>
+          <textarea matInput formControlName="servicingDescription"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="form-field-row">
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="onSubmit()">Submit</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

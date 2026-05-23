@@ -1,0 +1,39 @@
+<div class="form-header">
+    <h1>New Route</h1>
+    <i class="fa fa-close" (click)="close('success')"></i>
+</div>
+
+<div class="form-container">
+    <form (ngSubmit)="submitRoute()">
+        <div class="input-row">
+            <div class="input-group">
+                <label for="route" class="label">Route</label>
+                <input
+                    type="text"
+                    id="route"
+                    class="input"
+                    [(ngModel)]="route.route"
+                    name="route"
+                    placeholder="Enter Route"
+                    required
+                />
+            </div>
+            
+            <div class="input-group">
+                <label for="notes" class="label">Description:</label>
+                <textarea
+                    id="notes"
+                    [(ngModel)]="route.description"
+                    name="description"
+                    rows="4"
+                    class="input"
+                    placeholder="Enter additional notes"
+                ></textarea>
+            </div>
+        </div>
+        
+        <div class="input-row">
+            <button type="submit" class="submit-button">Submit</button>
+        </div>
+    </form>
+</div>

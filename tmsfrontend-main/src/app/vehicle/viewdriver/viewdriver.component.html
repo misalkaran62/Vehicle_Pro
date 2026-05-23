@@ -1,0 +1,80 @@
+<section class="OuterDiv">
+  <div class="Heading-content">
+    <div>
+      <h1 class="vehicle_heading">Driver</h1>
+      <p class="para">View all of Driver List</p>
+    </div>
+    <div class="actions">
+     
+      <input type="date" class="date-picker" [(ngModel)]="selectedDate" (change)="filterByDate()" />
+      <input type="text" class="search-input" placeholder="Search drivername & email" [(ngModel)]="searchTerm"
+        (keyup)="searchDriver()" />
+      <button class="Btn" (click)="allDriver()">All driver</button>
+      <button class="Btn" (click)="registerUser()">Create driver</button>
+      <button class="Btn" type="submit" (click)="exportToExcel()">Excel Export</button>
+    </div>
+  </div>
+
+  <div class="tableBox">
+    <table class="my_table">
+      <thead>
+        <tr>
+          <th>Sr. No.</th>
+          <th>Driver Name</th>
+          <th>Date</th>
+          <th>Email Address</th>
+          <th>Branch</th>
+          <th>Status</th>
+          <th>Working Status</th> <!-- Added Date Column -->
+          <th>Action</th> <!-- Added Action Column -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="table-data"
+          *ngFor="let user of filteredDriver | paginate: { itemsPerPage: 6, currentPage: page }let i=index">
+          <td>{{ (page-1) * 6 + i + 1 }}</td>
+          <td>{{ user.firstName }} {{ user.lastName }}</td>
+          <td>{{ user?.createdAt|date : 'dd/MM/yyyy'}}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.branches[0]?.branchName }}</td>
+          <td><label class="switch">
+              <input type="checkbox" [checked]="user.status" (change)="toggleStatus(user)" />
+              <span class="slider"></span>
+            </label></td> <!-- Assuming 'date' is part of your user object -->
+          <td class="status">
+            <span [ngClass]="{
+              'status': true,
+              'available':  user.driverStatus === 'AVAILABLE',
+              'ontrip':  user.driverStatus === 'ON_TRIP',
+              'unavailable':  user.driverStatus === 'UNAVAILABLE'              
+            }">
+              {{ user.driverStatus}}
+            </span>
+          </td>
+          <td>
+            <button class="update-btn" (click)="updateUser(user.id)"><i class="fa fa-pencil-square-o"
+                aria-hidden="true"></i></button>
+            <button class="delete-btn" (click)="deleteDriver(user.id)"><i class="fa fa-trash-o"
+                aria-hidden="true"></i></button>
+            <!-- <button mat-button [matMenuTriggerFor]="addMenu" class="doc-btn"><i class="fa fa-file"
+                aria-hidden="true"></i></button>
+            <mat-menu #addMenu="matMenu">
+              <button mat-menu-item class="kyc-img" (click)="viewDocument('aadharcard',user.id)"
+                style="background-color: #fff;">Aadhar Card</button>
+              <button mat-menu-item (click)="viewDocument('pancard', user.id)" style="background-color: #fff;">Pan
+                Card</button>
+              <button mat-menu-item (click)="viewDocument('drivinglicense', user.id)"
+                style="background-color: #fff;">Driving License</button>
+            </mat-menu> -->
+            <button class="view-btn" (click)="driverdetails(user.id)"><i class="fa fa-eye"></i></button>
+          </td>
+
+        </tr>
+      </tbody>
+      <!-- Pagination controls -->
+
+    </table>
+  </div>
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
+
+</section>

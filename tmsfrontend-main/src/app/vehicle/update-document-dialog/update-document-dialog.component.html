@@ -1,0 +1,356 @@
+<h1 mat-dialog-title class="header">Update Vehicle {{ data.type | titlecase }}</h1>
+<div mat-dialog-content>
+    <form [formGroup]="formGroup" (ngSubmit)="updateData()" enctype="multipart/form-data">
+        <ng-container [ngSwitch]="data.type">
+            <!-- Permit Form -->
+            <div *ngSwitchCase="'permits'" class="content">
+                <mat-form-field appearance="outline">
+                    <mat-label>Permit Receipt No</mat-label>
+                    <input matInput formControlName="permitReceiptNo">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Permit Type</mat-label>
+                    <mat-select formControlName="permitType">
+                        <mat-option value="Local">Local</mat-option>
+                        <mat-option value="National">National</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Start Date</mat-label>
+                    <input matInput [matDatepicker]="startDatePicker" formControlName="startDate">
+                    <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                    <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startDatePicker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>End Date</mat-label>
+                    <input matInput [matDatepicker]="endDatePicker" formControlName="endDate">
+                    <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                    <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endDatePicker></mat-datepicker>
+                </mat-form-field>
+                <input type="file" id="permitReceipt" (change)="onFileSelected($event, 'permitReceipt')" multiple>
+                <label class="fileBtn" for="permitReceipt">
+                    <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-width="2" stroke="#fffffff"
+                            d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+                            stroke-linejoin="round" stroke-linecap="round"></path>
+                        <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#fffffff"
+                            d="M17 15V18M17 21V18M17 18H14M17 18H20"></path>
+                    </svg>
+
+
+                    <span *ngIf="isFileSelected; else newFile">
+                        {{ this.selectedFiles.permitReceipt?.name}}
+                    </span>
+                    <ng-template #newFile>
+                        <span *ngIf="this.formGroup.value.permitReceiptName; else noFile">
+                            {{this.formGroup.value.permitReceiptName}}
+                        </span>
+                        <ng-template #noFile>
+                            Select File
+                        </ng-template>
+                    </ng-template>
+
+
+                </label>
+            </div>
+
+            <!-- Insurance Form -->
+            <div *ngSwitchCase="'insurance'" class="content">
+                <!-- Insurance Number -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Insurance Policy Number</mat-label>
+                    <input matInput formControlName="insuranceNumber">
+                </mat-form-field>
+
+                <!-- Insurance Type -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Insurance Type</mat-label>
+                    <mat-select formControlName="insuranceType">
+                        <mat-option value="First_party">First party</mat-option>
+                        <mat-option value="Third_party">Third party</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <!-- Insurance Company -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Insurance Company Name</mat-label>
+                    <input matInput formControlName="insuranceCompany">
+                </mat-form-field>
+
+                <!-- Start Date -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Start Date</mat-label>
+                    <input matInput [matDatepicker]="startDatePicker" formControlName="startDate">
+                    <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                    <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startDatePicker></mat-datepicker>
+                </mat-form-field>
+
+                <!-- End Date -->
+                <mat-form-field appearance="outline">
+                    <mat-label>End Date</mat-label>
+                    <input matInput [matDatepicker]="endDatePicker" formControlName="endDate">
+                    <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                    <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endDatePicker></mat-datepicker>
+                </mat-form-field>
+                <input type="file" id="insurance" (change)="onFileSelected($event, 'insuranceReceipt')" multiple>
+                <label class="fileBtn" for="insurance">
+                    <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-width="2" stroke="#fffffff"
+                            d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+                            stroke-linejoin="round" stroke-linecap="round"></path>
+                        <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#fffffff"
+                            d="M17 15V18M17 21V18M17 18H14M17 18H20"></path>
+                    </svg>
+
+                    <span *ngIf="isFileSelected; else newFile">
+                        {{ this.selectedFiles.insuranceReceipt?.name}}
+                    </span>
+                    <ng-template #newFile>
+                        <span *ngIf="this.formGroup.value.insuranceReceiptName; else noFile">
+                            {{this.formGroup.value.insuranceReceiptName}}
+                        </span>
+                        <ng-template #noFile>
+                            Select File
+                        </ng-template>
+                    </ng-template>
+
+                </label>
+                <!-- File Upload -->
+
+            </div>
+
+
+            <div *ngSwitchCase="'fitness'" class="content">
+                <!-- fitness Number -->
+                <mat-form-field appearance="outline">
+                    <mat-label>fitness Receipt NO</mat-label>
+                    <input matInput formControlName="fitnessReceiptNO">
+                </mat-form-field>
+
+
+                <!-- Start Date -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Start Date</mat-label>
+                    <input matInput [matDatepicker]="startDatePicker" formControlName="startDate">
+                    <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                    <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startDatePicker></mat-datepicker>
+                </mat-form-field>
+
+                <!-- End Date -->
+                <mat-form-field appearance="outline">
+                    <mat-label>End Date</mat-label>
+                    <input matInput [matDatepicker]="endDatePicker" formControlName="endDate">
+                    <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                    <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endDatePicker></mat-datepicker>
+                </mat-form-field>
+                <input type="file" id="fitness" (change)="onFileSelected($event, 'fitnessReceipt')" multiple>
+                <label class="fileBtn" for="fitness">
+                    <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-width="2" stroke="#fffffff"
+                            d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+                            stroke-linejoin="round" stroke-linecap="round"></path>
+                        <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#fffffff"
+                            d="M17 15V18M17 21V18M17 18H14M17 18H20"></path>
+                    </svg>
+
+                    <span *ngIf="isFileSelected; else newFile">
+                        {{ this.selectedFiles.fitnessReceipt?.name}}
+                    </span>
+                    <ng-template #newFile>
+                        <span *ngIf="this.formGroup.value.fitnessReceiptName; else noFile">
+                            {{this.formGroup.value.fitnessReceiptName}}
+                        </span>
+                        <ng-template #noFile>
+                            Select File
+                        </ng-template>
+                    </ng-template>
+
+                </label>
+                <!-- File Upload -->
+
+
+            </div>
+
+
+            <div *ngSwitchCase="'road taxes'" class="content">
+                <!-- road tax Number -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Road Tax Receipt No</mat-label>
+                    <input matInput formControlName="roadTaxReceiptNo">
+                </mat-form-field>
+                <!-- Tax Type -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Tax Type</mat-label>
+                    <mat-select formControlName="taxType">
+                        <mat-option value="LIFETIME">LIFETIME</mat-option>
+                        <mat-option value="LIMITED">LIMITED</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+
+                <!-- Start Date -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Start Date</mat-label>
+                    <input matInput [matDatepicker]="startDatePicker" formControlName="startDate">
+                    <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                    <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startDatePicker></mat-datepicker>
+                </mat-form-field>
+
+                <!-- End Date -->
+                <mat-form-field appearance="outline" *ngIf="formGroup.get('taxType')?.value === 'LIMITED'">
+                    <mat-label>End Date</mat-label>
+                    <input matInput [matDatepicker]="endDatePicker" formControlName="endDate">
+                    <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                    <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endDatePicker></mat-datepicker>
+                </mat-form-field>
+                <input type="file" id="roadTaxes" (change)="onFileSelected($event, 'taxReceipt')" multiple>
+                <label class="fileBtn" for="roadTaxes">
+                    <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-width="2" stroke="#fffffff"
+                            d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+                            stroke-linejoin="round" stroke-linecap="round"></path>
+                        <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#fffffff"
+                            d="M17 15V18M17 21V18M17 18H14M17 18H20"></path>
+                    </svg>
+                    
+                    <span *ngIf="isFileSelected; else newFile">
+                        {{ this.selectedFiles.taxReceipt?.name}}
+                    </span>
+                    <ng-template #newFile>
+                        <span *ngIf="this.formGroup.value.taxReceiptName; else noFile">
+                            {{this.formGroup.value.taxReceiptName}}
+                        </span>
+                        <ng-template #noFile>
+                            Select File
+                        </ng-template>
+                    </ng-template>
+
+                </label>
+                <!-- File Upload -->
+
+            </div>
+
+
+            <!-- puc form -->
+
+            <div *ngSwitchCase="'pucs'" class="content">
+                <!-- puc Number -->
+                <mat-form-field appearance="outline">
+                    <mat-label>pucReceiptNo</mat-label>
+                    <input matInput formControlName="pucReceiptNo">
+                </mat-form-field>
+
+                <!-- Start Date -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Start Date</mat-label>
+                    <input matInput [matDatepicker]="startDatePicker" formControlName="startDate">
+                    <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                    <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startDatePicker></mat-datepicker>
+                </mat-form-field>
+
+                <!-- End Date -->
+                <mat-form-field appearance="outline">
+                    <mat-label>End Date</mat-label>
+                    <input matInput [matDatepicker]="endDatePicker" formControlName="endDate">
+                    <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                    <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endDatePicker></mat-datepicker>
+                </mat-form-field>
+                <input type="file" id="pucs" (change)="onFileSelected($event, 'pucReceipt')" multiple>
+                <label class="fileBtn" for="pucs">
+                    <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-width="2" stroke="#fffffff"
+                            d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+                            stroke-linejoin="round" stroke-linecap="round"></path>
+                        <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#fffffff"
+                            d="M17 15V18M17 21V18M17 18H14M17 18H20"></path>
+                    </svg>
+                    
+                    <span *ngIf="isFileSelected; else newFile">
+                        {{ this.selectedFiles.pucReceipt?.name}}
+                    </span>
+                    <ng-template #newFile>
+                        <span *ngIf="this.formGroup.value.pucReceiptName; else noFile">
+                            {{this.formGroup.value.pucReceiptName}}
+                        </span>
+                        <ng-template #noFile>
+                            Select File
+                        </ng-template>
+                    </ng-template>
+
+                </label>
+                <!-- File Upload -->
+
+            </div>
+
+            
+
+            <div *ngSwitchCase="'part mapping'" class="content">
+                <mat-form-field appearance="outline">
+                    <mat-label>Choose Item</mat-label>
+                    <mat-select formControlName="partChangeId">
+                      <mat-option *ngFor="let item of allparts" [value]="item?.id">
+                        {{ item?.partName }} _ {{ item?.brandName }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                <!--serialNumber  -->
+                <mat-form-field appearance="outline">
+                    <mat-label>serialNumber</mat-label>
+                    <input matInput formControlName="serialNumber">
+                </mat-form-field>
+
+                <!-- vendor -->
+                <mat-form-field appearance="outline">
+                    <mat-label>vendorName</mat-label>
+                    <input matInput formControlName="vendorName">
+                </mat-form-field>
+
+                <!-- dateOfPurchase Date -->
+                <mat-form-field appearance="outline">
+                    <mat-label>dateOfPurchase</mat-label>
+                    <input matInput [matDatepicker]="dateOfPurchase" formControlName="dateOfPurchase">
+                    <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                    <mat-datepicker-toggle matIconSuffix [for]="dateOfPurchase"></mat-datepicker-toggle>
+                    <mat-datepicker #dateOfPurchase></mat-datepicker>
+                </mat-form-field>
+
+                <!-- Date of validity -->
+                <mat-form-field appearance="outline">
+                    <mat-label>dateOfValidity</mat-label>
+                    <input matInput [matDatepicker]="endDatePicker" formControlName="dateOfValidity">
+                    <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                    <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endDatePicker></mat-datepicker>
+                </mat-form-field>
+                    
+
+            </div>
+
+
+
+        </ng-container>
+        <div mat-dialog-actions class="buttons">
+            <button mat-button type="button" (click)="closeDialog()">Cancel</button>
+            <button mat-button type="submit" style="margin-left: 20px;" [disabled]="formGroup.invalid">Save</button>
+        </div>
+
+    </form>
+</div>

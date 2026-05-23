@@ -1,0 +1,83 @@
+<div class="form-header">
+    <h1>UpdateTrip</h1>
+  
+   
+        <i class="fa fa-close" (click)="close('closes')"></i>
+    
+  </div>
+  <div class="form-container">
+    
+    
+      <!-- View All Trips Button -->
+      
+    
+      <form [formGroup]="tripForm" (ngSubmit)="onSubmit()">
+        <div class="input-row">
+          <div class="input-group">
+            <label for="route" class="label">Route: <button class="btn"  type="button" (click)="Route()">+</button></label>
+            <div formGroupName="route">
+              <select id="route" formControlName="id" class="input" required>
+                <option value="" disabled selected>Select your Route</option>
+                <option *ngFor="let route of routes" [value]="route.id">{{ route.route }}</option>
+              </select>
+              <div *ngIf="tripForm.get('route.id')?.invalid && tripForm.get('route.id')?.touched" class="error">Route is required</div>
+            </div>
+          </div>
+    
+          <div class="input-group" *ngIf="currentUser?.roles=='SUPERADMIN'||currentUser?.roles=='RegionalManager'">
+            <label for="branch" class="label">Branch</label>
+            <div formGroupName="branch">
+              <select id="branch" formControlName="id" class="input" required>
+                <option value="" disabled selected>Select your branch</option>
+                <option *ngFor="let branch of branches" [value]="branch.id">{{ branch.branchName }}</option>
+              </select>
+              <div *ngIf="tripForm.get('branch.id')?.invalid && tripForm.get('branch.id')?.touched" class="error">Branch is required</div>
+            </div>
+          </div>
+    
+          <div class="input-group">
+            <label for="driver" class="label">Driver:</label>
+            <div formGroupName="driver">
+              
+              <select id="driver" formControlName="id" class="input" required>
+                <option value="" disabled selected>Select Driver Name</option>
+                <option *ngFor="let driver of drivers" [value]="driver.id" >{{ driver.firstName }} {{ driver.lastName }}</option>
+              </select>
+              <!-- "tripForm.get('driver.id')?.value === driver.id || drivers[0]?.id === driver.id" -->
+              <!-- <div *ngIf="tripForm.get('driver.id')?.invalid && tripForm.get('driver.id')?.touched" class="error">Driver is required</div> -->
+            </div>
+          </div>
+    
+          <div class="input-group">
+            <label for="vehicle" class="label">Vehicle:</label>
+            <div formGroupName="vehicle">
+              <select id="vehicle" formControlName="vehicleId" class="input" required>
+                <option value="" disabled selected>Select your vehicle</option>
+                <!-- <option *ngFor="let vehicle of vehicles" [value]="vehicle.vehicleId" [selected]="tripForm.get('vehicle.vehicleId')?.value === vehicle.vehicleId || vehicles[0]?.vehicleId === vehicle.vehicleId">{{ vehicle.vehicleReg }}</option> -->
+                 
+                <option *ngFor="let vehicle of vehicles" [value]="vehicle.vehicleId" [selected]="tripForm.value.vehicle.vehicleId">{{ vehicle?.vehicleReg }}</option>
+
+                <!-- "vehicle.vehicleId === tripForm.get('vehicle.vehicleId')?.value" -->
+              </select>
+              <div *ngIf="tripForm.get('vehicle.vehicleId')?.invalid && tripForm.get('vehicle.vehicleId')?.touched" class="error">Vehicle is required</div>
+            </div>
+          </div>
+        </div>
+    
+        <div class="input-group">
+          <label for="notes" class="label">Additional Notes:</label>
+          <textarea id="notes" formControlName="notes" rows="4" class="input" placeholder="Enter additional notes"></textarea>
+        </div>
+    
+        <div class="input-row">
+          <button type="submit" class="submit-button">{{isUpdate?'Update':'Create trip'}}</button>
+  
+  
+      </div>
+  
+      </form>
+    </div>
+  
+  
+    <!--  -->
+    

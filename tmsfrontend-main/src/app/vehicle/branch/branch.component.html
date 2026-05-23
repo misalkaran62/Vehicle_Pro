@@ -1,0 +1,85 @@
+
+<div class="form-header">
+    <h1>{{ isUpdate ? 'Update Branch' : 'Add new Branch' }}</h1>
+    <i class="fa fa-close" (click)="close('nosd')"></i>
+</div>
+
+<section class="form-container">
+
+  <form #branchForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="input-row">
+        <div class="input-group">
+            <label for="branchName" class="label">Branch Name</label>
+            <input
+                type="text"
+                id="branchName"
+                class="input"
+                placeholder="Enter branch name"
+                required
+                [(ngModel)]="branch.branchName"
+                name="branchName"
+            />
+        </div>
+    </div>
+
+      <div class="input-row">
+        
+          
+          <div class="input-group">
+            <label for="branchLocation" class="label">Branch Location</label>
+            <input
+                type="text"
+                id="branchLocation"
+                class="input"
+                placeholder="Enter branch location"
+                required
+                [(ngModel)]="branch.branchLocation"
+                name="branchLocation"
+            />
+        </div>
+
+         
+      </div>
+
+      <div class="input-row">
+        <div class="input-group">
+          <label for="branchContactPerson" class="label">Contact Person Name</label>
+          <input
+              type="text"
+              id="branchContactPerson"
+              class="input"
+              placeholder="Enter contact person name"
+              required
+              [(ngModel)]="branch.branchContactPerson"
+              name="branchContactPerson"
+          />
+      </div>
+      </div>
+     
+      <div class="input-row">
+          
+          <div class="input-group">
+              <label for="branchContactPersonMobile" class="label">Contact Person Mobile Number</label>
+              <input
+                  type="text"
+                  id="branchContactPersonMobile"
+                  class="input"
+                  placeholder="Enter contact person mobile number"
+                  required
+                  maxlength="10"
+                  [(ngModel)]="branch.branchContactPersonMobile"
+                  name="branchContactPersonMobile"
+              />
+          </div>
+
+
+      </div>
+      <div class="input-row">
+        <button type="submit" class="submit-button"  [disabled]="!branchForm.valid">Save Branch</button>
+
+
+    </div>
+   
+    
+  </form>
+</section>

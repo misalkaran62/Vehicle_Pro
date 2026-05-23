@@ -1,0 +1,26 @@
+<section class="form-container newinsurance_main">
+    <div class="insurance_arrow" [routerLink]="['/dashboard/vehicle/notification']">
+        <div class="arrow-icon"><i class="fa fa-arrow-left"></i></div>
+        <div class="arrow-text">Back</div>
+    </div>
+    <h1 class="form-header">New Notification</h1>
+    <div class="notify-main">
+        <div class="input-row notify-up">
+            <div class="input-group notify-name">
+                <label for="name" class="label">Name</label>
+                <input type="text" id="name" class="input notify_input" placeholder="Enter name" />
+            </div>
+            <div class="input-group notify-name">
+                <label for="notificationType" class="label">Notification Type</label>
+                <input type="text" id="notificationType" class="input notify_input" placeholder="Enter notification type" />
+            </div>
+        </div>
+        <div class="input-row notify-down">
+            <label for="notificationText" class="label">Text</label>
+            <textarea id="notificationText" class="input notify_textarea" placeholder="Write something.." rows="4"></textarea>
+        </div>
+        <div class="input-row newi1_button">
+            <button class="submit-button newinsurance_button">Submit</button>
+        </div>
+    </div>
+</section>

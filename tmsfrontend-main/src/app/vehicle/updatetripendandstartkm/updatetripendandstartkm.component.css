@@ -1,0 +1,100 @@
+.header {
+    margin-top: 5px;
+    text-align: center;
+}
+
+file-input-container {
+    flex: 1;
+    /* Allow the file input to take available space */
+}
+
+.file-input-container mat-label {
+    display: block;
+    /* Make label take full width */
+    margin-bottom: 8px;
+    /* Space below the label */
+    font-weight: bold;
+    /* Make the label bold */
+}
+
+.file-input-container input[type="file"] {
+    width: 100%;
+    /* Make the file input full width */
+    padding: 8px;
+    /* Padding for a better click area */
+    border: 1px solid #ccc;
+    /* Border for file input */
+    border-radius: 4px;
+    /* Rounded corners */
+    transition: border-color 0.3s;
+    /* Smooth transition for focus */
+}
+
+.file-input-container input[type="file"]:hover {
+    border-color: #007bff;
+    /* Change border color on hover */
+}
+
+.file-input-container input[type="file"]:focus {
+    outline: none;
+    /* Remove default outline */
+    border-color: #0056b3;
+    /* Change border color on focus */
+}
+
+.fileBtn {
+    margin-bottom: 10px;
+    border: none;
+    display: flex;
+    padding: 0.75rem 0.75rem;
+    background-color: var(--btnFile);
+    color: var(--bg);
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    text-transform: uppercase;
+    vertical-align: middle;
+    align-items: center;
+    border-radius: 0.5rem;
+    user-select: none;
+    gap: 0.50rem;
+    transition: all 0.6s ease;
+    width: 30%;
+}
+
+.fileBtn svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.fileselector{
+  display: flex;
+  gap: 20px;
+}
+.content {
+    padding: 20px;
+
+}
+
+mat-form-field {
+    width: 100%;
+
+}
+
+form{
+    padding: 20px;
+}
+
+.buttons {
+
+    margin-bottom: 20px;
+    text-align: center;
+
+}
+
+[type="file"]{
+    /* width: 100%; */
+    display: none !important;
+}

@@ -1,0 +1,37 @@
+2025-02-11 11:18:55 - HV000001: Hibernate Validator 8.0.1.Final
+2025-02-11 11:18:55 - Starting tms using Java 21.0.1 with PID 13756 (C:\Anant\skbit projects\tms\target\classes started by anant in C:\Anant\skbit projects\tms)
+2025-02-11 11:18:55 - The following 1 profile is active: "dev"
+2025-02-11 11:18:55 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-02-11 11:18:55 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-02-11 11:18:58 - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-02-11 11:18:58 - Finished Spring Data repository scanning in 303 ms. Found 22 JPA repository interfaces.
+2025-02-11 11:19:00 - Tomcat initialized with port 8282 (http)
+2025-02-11 11:19:00 - Initializing ProtocolHandler ["http-nio-8282"]
+2025-02-11 11:19:00 - Starting service [Tomcat]
+2025-02-11 11:19:00 - Starting Servlet engine: [Apache Tomcat/10.1.26]
+2025-02-11 11:19:00 - Initializing Spring embedded WebApplicationContext
+2025-02-11 11:19:00 - Root WebApplicationContext: initialization completed in 4746 ms
+2025-02-11 11:19:00 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-02-11 11:19:01 - HHH000412: Hibernate ORM core version 6.5.2.Final
+2025-02-11 11:19:01 - HHH000026: Second-level cache disabled
+2025-02-11 11:19:01 - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-02-11 11:19:02 - HikariPool-1 - Starting...
+2025-02-11 11:19:02 - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1c35e418
+2025-02-11 11:19:02 - HikariPool-1 - Start completed.
+2025-02-11 11:19:03 - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-02-11 11:19:06 - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-02-11 11:19:06 - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-02-11 11:19:07 - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-02-11 11:19:08 - Global AuthenticationManager configured with UserDetailsService bean with name userDetailService
+2025-02-11 11:19:09 - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-02-11 11:19:11 - LiveReload server is running on port 35729
+2025-02-11 11:19:11 - Starting ProtocolHandler ["http-nio-8282"]
+2025-02-11 11:19:11 - Tomcat started on port 8282 (http) with context path '/'
+2025-02-11 11:19:11 - Started tms in 16.747 seconds (process running for 38.275)
+2025-02-11 11:21:33 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-02-11 11:21:33 - Initializing Servlet 'dispatcherServlet'
+2025-02-11 11:21:33 - Completed initialization in 3 ms
+2025-02-11 11:21:33 - Invalid Header Value !! 
+2025-02-11 11:21:34 - Login user: JwtRequest(name=anantvarshney5211@gmail.com, password=Anant@123)
+2025-02-11 11:21:44 - Invalid Header Value !! 
+2025-02-11 11:21:44 - Login user: JwtRequest(name=transport@smexpresslogistics.com, password=Transport@123)

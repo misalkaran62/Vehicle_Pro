@@ -1,0 +1,43 @@
+<section class="OuterDiv">
+  <div class="Heading-content">
+    <div>
+      <h1 class="vehicle_heading">Notification</h1>
+      <p class="para">View all of Client Notification List</p>
+    </div>
+    <div class="actions">
+      <input type="text" class="search-input" placeholder="Search By Vehicleno & Mname" [(ngModel)]="searchTerm"
+        (keyup)="searchNotification()" />
+
+      <input type="date" class="date-picker" [(ngModel)]="selectedDate" (change)="filterByDate()" />
+    </div>
+  </div>
+
+  <div class="tableBox">
+    <table class="my_table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Vehicle Number</th>
+          <th>Description</th>
+          <th>Maneger Name</th>
+          <th>Notification-Type</th>
+          <th>Date</th>
+          <th>Status</th> 
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="table-data"
+          *ngFor="let notification of filteredNotifications |  paginate: { itemsPerPage: 9, currentPage: page }; let i = index">
+          <td>{{notification.notificationId}}</td>
+          <td>{{notification.vehilceRegNo}}</td>
+          <td>{{notification.notification}}</td>
+          <td>{{notification.userName}}</td>
+          <td>{{notification.notificationType}}</td>
+          <td>{{notification.notificationDate |date:'dd-MM-yyyy'}}</td>
+          <td id="status">{{notification.status}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
+</section>

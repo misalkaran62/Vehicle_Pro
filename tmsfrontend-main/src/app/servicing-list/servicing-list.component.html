@@ -1,0 +1,102 @@
+  <section class="OuterDiv">
+    <div class="Heading-content">
+      <div>
+        <h1 class="vehicle_heading">Servicing List</h1>
+      <pre><p class="para">View all of Servicing List of   <span class="servicing_list_no">{{vehicle.vehicleReg}}</span></p></pre> 
+      </div>
+      <div class="actions">
+        <input type="date" class="date-picker" [(ngModel)]="selectedDate" (change)="filterByDate()" />
+        <button [routerLink]="['/dashboard/servicing']" routerLinkActive="router-link-active"  class="Btn">Go Back</button>
+      </div>
+     
+    </div>
+
+    <div class="tableBox">
+      <table class="my_table">
+        <thead>
+          <tr>
+            <th>Service Id</th>
+            <th>Next Servicing</th>
+            <th>Amount</th>
+            <th>Servicing Type</th>
+            <th>Servicing Date</th>
+            <!-- <th>status</th> -->
+            <th>Status</th>
+            <th [style.display]="isPartChangeVisible ? '' : 'none'">
+              Approved
+            </th>
+            <th>Action</th> <!-- Added Action Column -->
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container>
+            <tr *ngFor="let items of list; let i = index">
+            
+              <td>{{ items?.servicingId }}</td>
+              <td>{{ items?.lastServicing | date }}</td>
+              <td>{{ items?.cost }}</td>
+              <td>{{ items?.servicingType }}</td>
+              <td>{{ items?.servicingDate | date }}</td>
+              <td class="status-cell">
+                <span [ngClass]="{
+                  
+                    'completed': items.completionStatus === 'SERVICING_COMPLETED',
+                    'process': items.completionStatus === 'ON_SERVICING',
+                  
+                    'create': items.completionStatus === 'SERVICING_RAISED'
+                  }">
+                  {{ items.completionStatus || 'SERVICING_RAISED' }}
+                </span>
+
+
+
+              <td [style.display]="isPartChangeVisible ? '' : 'none'">
+                <ng-container
+                  *ngIf="items.servicingType === 'PART_CHANGE' || items.servicingType === 'ACCIDENT'; else emptyCell">
+                  <label class="switch">
+                    <input type="checkbox" [(ngModel)]="items.approved" (ngModelChange)="onApprovedChange(items)"
+                      [disabled]="items.completionStatus !== 'ON_SERVICING'" />
+                    <span class="slider round"></span>
+                  </label>
+                </ng-container>
+                <ng-template #emptyCell>
+
+                </ng-template>
+              </td>
+
+              <!-- Action Buttons -->
+              <td>
+                <button class="view-btn" (click)="oneService(items.servicingId )" *ngIf="items.completionStatus === 'SERVICING_COMPLETED'">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <!-- <button class="update-btn" (click)="sendOneServicingRow(items.servicingId)"
+                  >
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+
+                </button> -->
+
+                <button class="update-btn" (click)="sendOneServicingRow(items.servicingId)"
+                *ngIf="items.completionStatus !== 'SERVICING_COMPLETED'">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+
+              </button>
+                <button class="delete-btn" (click)="deleteServicingRow(items.servicingId)"
+                  *ngIf="items.completionStatus === 'SERVICING_RAISED'">
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+              </td>
+            </tr>
+
+          </ng-container>
+        </tbody>
+        <!-- Pagination controls -->
+
+      </table>
+     
+    </div>
+    <div class="total">
+      <p class="totalServicing">Total Servicing Amount : {{ totalAmount | currency:'INR' }}</p>
+      <p class="totalServicing">Total Servicing Records : {{ list.length }}</p>
+
+    </div>
+  </section>

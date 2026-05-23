@@ -1,0 +1,19 @@
+.view-branches{
+    cursor: pointer;
+}
+
+.tableBox .my_table td {
+    vertical-align: center;
+}
+
+.tableBox .my_table td .branch-list {
+    display: block;
+    margin: 0;
+    padding: 0 0 0 20px;
+    list-style: none;
+    list-style-type: decimal;
+}
+
+/* .tableBox .my_table td:nth-child(5) {
+    width: 220px;      
+} */
